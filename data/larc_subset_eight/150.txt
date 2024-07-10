@@ -1,0 +1,72 @@
+67a423a3.json
+
+Example 0:
+Input:
+[[0 3 0 0]
+[2 2 2 2]
+[0 3 0 0]
+[0 3 0 0]]
+Output:
+[[4 4 4 0]
+[4 2 4 2]
+[4 4 4 0]
+[0 3 0 0]]
+Example 1:
+Input:
+[[0 0 0 0 6 0 0 0]
+[0 0 0 0 6 0 0 0]
+[0 0 0 0 6 0 0 0]
+[0 0 0 0 6 0 0 0]
+[8 8 8 8 6 8 8 8]
+[0 0 0 0 6 0 0 0]
+[0 0 0 0 6 0 0 0]
+[0 0 0 0 6 0 0 0]]
+Output:
+[[0 0 0 0 6 0 0 0]
+[0 0 0 0 6 0 0 0]
+[0 0 0 0 6 0 0 0]
+[0 0 0 4 4 4 0 0]
+[8 8 8 4 6 4 8 8]
+[0 0 0 4 4 4 0 0]
+[0 0 0 0 6 0 0 0]
+[0 0 0 0 6 0 0 0]]
+Example 2:
+Input:
+[[0 0 1 0 0 0]
+[0 0 1 0 0 0]
+[9 9 1 9 9 9]
+[0 0 1 0 0 0]
+[0 0 1 0 0 0]
+[0 0 1 0 0 0]]
+Output:
+[[0 0 1 0 0 0]
+[0 4 4 4 0 0]
+[9 4 1 4 9 9]
+[0 4 4 4 0 0]
+[0 0 1 0 0 0]
+[0 0 1 0 0 0]]
+
+==========Human Description==========
+
+In the input, you should see:  two intersecting lines of different colors
+
+The output grid size:  is identical to the input grid.
+
+To make the output, you have to:  surround the middle point of the intersection with a 3x3 yellow border, leaving the central block in its original color.
+
+==========Human Description==========
+
+In the input, you should see: two different color lines that cross.
+
+The output grid size: stays the same.
+
+To make the output, you have to: create a yellow square around the point where the two lines meet.
+
+==========Human Description==========
+
+In the input, you should see:  two different color lines intersecting.
+
+The output grid size:  the same size as the input grid.
+
+To make the output, you have to:  draw a 3x3 square around the point that the lines intersect (but make sure the exact point they meet stays the original color (for instance, if it is a red line crossing over a green line, draw a 3x3 square surrounding the point they cross over, but make sure the red point is still visible).
+

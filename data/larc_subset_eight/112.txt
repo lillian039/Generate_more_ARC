@@ -1,0 +1,57 @@
+496994bd.json
+
+Example 0:
+Input:
+[[2 2 2]
+[2 2 2]
+[3 3 3]
+[0 0 0]
+[0 0 0]
+[0 0 0]
+[0 0 0]
+[0 0 0]
+[0 0 0]
+[0 0 0]]
+Output:
+[[2 2 2]
+[2 2 2]
+[3 3 3]
+[0 0 0]
+[0 0 0]
+[0 0 0]
+[0 0 0]
+[3 3 3]
+[2 2 2]
+[2 2 2]]
+Example 1:
+Input:
+[[2 2 2 2 2]
+[8 8 8 8 8]
+[0 0 0 0 0]
+[0 0 0 0 0]
+[0 0 0 0 0]
+[0 0 0 0 0]
+[0 0 0 0 0]
+[0 0 0 0 0]
+[0 0 0 0 0]
+[0 0 0 0 0]]
+Output:
+[[2 2 2 2 2]
+[8 8 8 8 8]
+[0 0 0 0 0]
+[0 0 0 0 0]
+[0 0 0 0 0]
+[0 0 0 0 0]
+[0 0 0 0 0]
+[0 0 0 0 0]
+[8 8 8 8 8]
+[2 2 2 2 2]]
+
+==========Human Description==========
+
+In the input, you should see:  a pattern of two colors on the top of the grid.
+
+The output grid size:  is the same as the input grid.
+
+To make the output, you have to:  mirror the top pattern below.
+

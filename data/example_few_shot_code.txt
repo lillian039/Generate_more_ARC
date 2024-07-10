@@ -1,0 +1,1545 @@
+ae4f1146.json
+
+The task is: 
+Example 0:
+Input:
+[[8 8 8 0 0 0 0 0 0]
+[1 8 8 0 8 1 8 0 0]
+[8 8 8 0 1 1 8 0 0]
+[0 0 0 0 8 8 8 0 0]
+[0 8 8 1 0 0 0 0 0]
+[0 8 8 8 0 0 8 1 8]
+[0 8 1 8 0 0 1 8 1]
+[0 0 0 0 0 0 1 8 1]
+[0 0 0 0 0 0 0 0 0]]
+Output:
+[[8 1 8]
+[1 8 1]
+[1 8 1]]
+Example 1:
+Input:
+[[0 8 8 1 0 0 0 0 0]
+[0 8 1 8 0 8 1 8 0]
+[0 8 8 8 0 1 8 8 0]
+[0 0 0 0 0 8 8 1 0]
+[0 0 8 1 8 0 0 0 0]
+[0 0 1 1 8 0 0 0 0]
+[0 0 8 8 1 0 8 8 8]
+[0 0 0 0 0 0 8 8 8]
+[0 0 0 0 0 0 1 8 8]]
+Output:
+[[8 1 8]
+[1 1 8]
+[8 8 1]]
+Example 2:
+Input:
+[[0 0 0 0 8 8 8 0 0]
+[8 8 8 0 8 8 8 0 0]
+[8 8 8 0 1 8 8 0 0]
+[8 8 8 0 0 0 0 0 0]
+[0 0 0 0 0 0 8 1 8]
+[8 1 8 0 0 0 1 1 8]
+[8 8 1 0 0 0 1 8 1]
+[1 8 8 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0]]
+Output:
+[[8 1 8]
+[1 1 8]
+[1 8 1]]
+Example 3:
+Input:
+[[0 0 1 1 8 0 0 0 0]
+[0 0 8 8 1 0 8 1 1]
+[0 0 1 1 8 0 1 1 1]
+[0 0 0 0 0 0 8 1 8]
+[8 8 8 0 0 0 0 0 0]
+[8 8 1 0 8 1 8 0 0]
+[1 8 8 0 1 8 8 0 0]
+[0 0 0 0 8 8 1 0 0]
+[0 0 0 0 0 0 0 0 0]]
+Output:
+[[8 1 1]
+[1 1 1]
+[8 1 8]]
+
+
+The rule is: .copy the 3x3 square from the input grid that has the most blue pixels.
+
+The code that implement the rule to solve the task is:
+
+import numpy as np
+from typing import *
+black, blue, red, green, yellow, grey, pink, orange, teal, maroon = range(10)
+
+def find_3x3_pixels(input_grid: np.ndarray, loc: Tuple[int, int]) -> np.ndarray:
+    return input_grid[loc[0] - 1:loc[0] + 2, loc[1] - 1:loc[1] + 2]
+
+def find_most_blue_pixels(input_grid: np.ndarray, locs: List[Tuple[int, int]], blue_counts: List[int]) -> Tuple[int, int]:
+    max_count = -1
+    max_loc = None
+    for i, loc in enumerate(locs):
+        if blue_counts[i] > max_count:
+            max_count = blue_counts[i]
+            max_loc = loc
+    return max_loc
+
+def count_blue_pixels(input_grid: np.ndarray, locs: List[Tuple[int, int]]) -> List[int]:
+    blue_counts = []
+    for loc in locs:
+        i, j = loc
+        blue_counts.append(np.sum(input_grid[i - 1:i + 2, j - 1:j + 2] == blue))
+    return blue_counts
+
+def find_non_black_3x3_pixels(input_grid: np.ndarray) -> List[Tuple[int, int]]:
+    locs = []
+    for i in range(input_grid.shape[0] - 2):
+        for j in range(input_grid.shape[1] - 2):
+            if np.all(input_grid[i:i + 3, j:j + 3] != black):
+                locs.append((i + 1, j + 1))
+    return locs
+
+def main(input_grid: np.ndarray) -> np.ndarray:
+    locs = find_non_black_3x3_pixels(input_grid)
+    n = count_blue_pixels(input_grid, locs)
+    loc = find_most_blue_pixels(input_grid, locs, n)
+    out_grid = find_3x3_pixels(input_grid, loc)
+    return out_grid
+
+-------------------
+
+2dc579da.json
+
+The task is: 
+Example 0:
+Input:
+[[8 8 3 8 8]
+[8 8 3 8 8]
+[3 3 3 3 3]
+[8 8 3 8 8]
+[4 8 3 8 8]]
+Output:
+[[8 8]
+[4 8]]
+Example 1:
+Input:
+[[4 4 4 2 4 4 4]
+[4 4 4 2 4 1 4]
+[4 4 4 2 4 4 4]
+[2 2 2 2 2 2 2]
+[4 4 4 2 4 4 4]
+[4 4 4 2 4 4 4]
+[4 4 4 2 4 4 4]]
+Output:
+[[4 4 4]
+[4 1 4]
+[4 4 4]]
+Example 2:
+Input:
+[[3 3 3 3 3 1 3 3 3 3 3]
+[3 3 3 3 3 1 3 3 3 3 3]
+[3 8 3 3 3 1 3 3 3 3 3]
+[3 3 3 3 3 1 3 3 3 3 3]
+[3 3 3 3 3 1 3 3 3 3 3]
+[1 1 1 1 1 1 1 1 1 1 1]
+[3 3 3 3 3 1 3 3 3 3 3]
+[3 3 3 3 3 1 3 3 3 3 3]
+[3 3 3 3 3 1 3 3 3 3 3]
+[3 3 3 3 3 1 3 3 3 3 3]
+[3 3 3 3 3 1 3 3 3 3 3]]
+Output:
+[[3 3 3 3 3]
+[3 3 3 3 3]
+[3 8 3 3 3]
+[3 3 3 3 3]
+[3 3 3 3 3]]
+
+
+The rule is: "zoom in" on the section with an off-color square.
+
+The code that implement the rule to solve the task is:
+
+import numpy as np
+from typing import *
+black, blue, red, green, yellow, grey, pink, orange, teal, maroon = range(10)
+
+def find_non_monochrome_array(inputs: Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]) -> np.ndarray:
+    for arr in inputs:
+        if len(np.unique(arr)) > 1:
+            return arr
+    return None
+
+def split_input(input: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    center_x = input.shape[0] // 2
+    center_y = input.shape[1] // 2
+    top_left = input[:center_x, :center_y]
+    top_right = input[:center_x, center_y + 1:]
+    bottom_left = input[center_x + 1:, :center_y]
+    bottom_right = input[center_x + 1:, center_y + 1:]
+    return (top_left, top_right, bottom_left, bottom_right)
+
+def main(input):
+    inputs = split_input(input)
+    output = find_non_monochrome_array(inputs)
+    return output
+
+-------------------
+
+ba26e723.json
+
+The task is: 
+Example 0:
+Input:
+[[4 0 4 0 4 0 4 0 4 0]
+[4 4 4 4 4 4 4 4 4 4]
+[0 4 0 4 0 4 0 4 0 4]]
+Output:
+[[6 0 4 0 4 0 6 0 4 0]
+[6 4 4 6 4 4 6 4 4 6]
+[0 4 0 6 0 4 0 4 0 6]]
+Example 1:
+Input:
+[[0 4 0 4 0 4 0 4 0 4 0]
+[4 4 4 4 4 4 4 4 4 4 4]
+[4 0 4 0 4 0 4 0 4 0 4]]
+Output:
+[[0 4 0 6 0 4 0 4 0 6 0]
+[6 4 4 6 4 4 6 4 4 6 4]
+[6 0 4 0 4 0 6 0 4 0 4]]
+Example 2:
+Input:
+[[4 0 4 0 4 0 4 0 4 0 4]
+[4 4 4 4 4 4 4 4 4 4 4]
+[0 4 0 4 0 4 0 4 0 4 0]]
+Output:
+[[6 0 4 0 4 0 6 0 4 0 4]
+[6 4 4 6 4 4 6 4 4 6 4]
+[0 4 0 6 0 4 0 4 0 6 0]]
+Example 3:
+Input:
+[[4 0 4 0 4 0 4 0 4 0 4 0 4]
+[4 4 4 4 4 4 4 4 4 4 4 4 4]
+[0 4 0 4 0 4 0 4 0 4 0 4 0]]
+Output:
+[[6 0 4 0 4 0 6 0 4 0 4 0 6]
+[6 4 4 6 4 4 6 4 4 6 4 4 6]
+[0 4 0 6 0 4 0 4 0 6 0 4 0]]
+Example 4:
+Input:
+[[0 4 0 4 0 4 0 4 0 4 0 4 0 4]
+[4 4 4 4 4 4 4 4 4 4 4 4 4 4]
+[4 0 4 0 4 0 4 0 4 0 4 0 4 0]]
+Output:
+[[0 4 0 6 0 4 0 4 0 6 0 4 0 4]
+[6 4 4 6 4 4 6 4 4 6 4 4 6 4]
+[6 0 4 0 4 0 6 0 4 0 4 0 6 0]]
+
+
+The rule is: start by changing the first set of two blocks to pink. Then skip two pairs and change the next two pink. Complete this pattern to the end of the grid.
+
+The code that implement the rule to solve the task is:
+
+import numpy as np
+from typing import *
+black, blue, red, green, yellow, grey, pink, orange, teal, maroon = range(10)
+
+def main(input_grid: np.ndarray) -> np.ndarray:
+    """
+    color the yellow pixels that in the column that can mod 3 to pink.
+    """
+    output_grid = input_grid.copy()
+    for col in range(input_grid.shape[1]):
+        for row in range(input_grid.shape[0]):
+            if col % 3 == 0:
+                if output_grid[row, col] == yellow:
+                    output_grid[row, col] = pink
+    return output_grid
+
+-------------------
+
+50cb2852.json
+
+The task is: 
+Example 0:
+Input:
+[[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 2 2 2 2 2 0 0 0 1 1 1 0 0]
+[0 0 2 2 2 2 2 0 0 0 1 1 1 0 0]
+[0 0 2 2 2 2 2 0 0 0 1 1 1 0 0]
+[0 0 2 2 2 2 2 0 0 0 0 0 0 0 0]
+[0 0 2 2 2 2 2 0 0 0 0 0 0 0 0]
+[0 0 2 2 2 2 2 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 3 3 3 3 3 3 3]
+[0 0 0 0 0 0 0 0 3 3 3 3 3 3 3]
+[0 0 0 0 0 0 0 0 3 3 3 3 3 3 3]
+[0 0 0 0 0 0 0 0 3 3 3 3 3 3 3]
+[0 0 0 0 0 0 0 0 3 3 3 3 3 3 3]]
+Output:
+[[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 2 2 2 2 2 0 0 0 1 1 1 0 0]
+[0 0 2 8 8 8 2 0 0 0 1 8 1 0 0]
+[0 0 2 8 8 8 2 0 0 0 1 1 1 0 0]
+[0 0 2 8 8 8 2 0 0 0 0 0 0 0 0]
+[0 0 2 8 8 8 2 0 0 0 0 0 0 0 0]
+[0 0 2 2 2 2 2 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 3 3 3 3 3 3 3]
+[0 0 0 0 0 0 0 0 3 8 8 8 8 8 3]
+[0 0 0 0 0 0 0 0 3 8 8 8 8 8 3]
+[0 0 0 0 0 0 0 0 3 8 8 8 8 8 3]
+[0 0 0 0 0 0 0 0 3 3 3 3 3 3 3]]
+Example 1:
+Input:
+[[0 0 0 0 0 0 0 0 0 0 0]
+[0 2 2 2 2 0 0 0 0 0 0]
+[0 2 2 2 2 0 0 0 0 0 0]
+[0 2 2 2 2 0 0 0 0 0 0]
+[0 2 2 2 2 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0]
+[0 0 1 1 1 1 1 1 0 0 0]
+[0 0 1 1 1 1 1 1 0 0 0]
+[0 0 1 1 1 1 1 1 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0]]
+Output:
+[[0 0 0 0 0 0 0 0 0 0 0]
+[0 2 2 2 2 0 0 0 0 0 0]
+[0 2 8 8 2 0 0 0 0 0 0]
+[0 2 8 8 2 0 0 0 0 0 0]
+[0 2 2 2 2 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0]
+[0 0 1 1 1 1 1 1 0 0 0]
+[0 0 1 8 8 8 8 1 0 0 0]
+[0 0 1 1 1 1 1 1 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0]]
+Example 2:
+Input:
+[[0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 2 2 2 2 0 0 0]
+[3 3 3 3 0 0 2 2 2 2 0 0 0]
+[3 3 3 3 0 0 2 2 2 2 0 0 0]
+[3 3 3 3 0 0 2 2 2 2 0 0 0]
+[3 3 3 3 0 0 2 2 2 2 0 0 0]
+[0 0 0 0 0 0 2 2 2 2 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 1 1 1 1 1 1 1 1 0 0 0]
+[0 0 1 1 1 1 1 1 1 1 0 0 0]
+[0 0 1 1 1 1 1 1 1 1 0 0 0]
+[0 0 1 1 1 1 1 1 1 1 0 0 0]]
+Output:
+[[0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 2 2 2 2 0 0 0]
+[3 3 3 3 0 0 2 8 8 2 0 0 0]
+[3 8 8 3 0 0 2 8 8 2 0 0 0]
+[3 8 8 3 0 0 2 8 8 2 0 0 0]
+[3 3 3 3 0 0 2 8 8 2 0 0 0]
+[0 0 0 0 0 0 2 2 2 2 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 1 1 1 1 1 1 1 1 0 0 0]
+[0 0 1 8 8 8 8 8 8 1 0 0 0]
+[0 0 1 8 8 8 8 8 8 1 0 0 0]
+[0 0 1 1 1 1 1 1 1 1 0 0 0]]
+
+
+The rule is: color the inside of each colored area with light blue.  Leave the outside of the colored shapes the example color one cube deep all the way around.
+
+The code that implement the rule to solve the task is:
+
+import numpy as np
+from typing import *
+black, blue, red, green, yellow, grey, pink, orange, teal, maroon = range(10)
+
+def color_non_black_cells(input_grid):
+    """
+    Traverse every position of input. For every position which is not black, if all of the four connected positions of it are not black, change the position to teal.
+    """
+    rows, cols = input_grid.shape
+    output_grid = np.copy(input_grid)
+    for i in range(rows):
+        for j in range(cols):
+            if input_grid[i][j] != black:
+                if i > 0 and j > 0 and (i < rows - 1) and (j < cols - 1):
+                    if input_grid[i - 1][j] != black and input_grid[i + 1][j] != black and (input_grid[i][j - 1] != black) and (input_grid[i][j + 1] != black):
+                        output_grid[i][j] = teal
+    return output_grid
+
+def main(input_grid):
+    output = color_non_black_cells(input_grid)
+    return output
+
+-------------------
+
+913fb3ed.json
+
+The task is: 
+Example 0:
+Input:
+[[0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 8 0 0 0 0 0 0]
+[0 3 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 2 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0]]
+Output:
+[[0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 4 4 4 0 0 0 0 0]
+[6 6 6 0 4 8 4 0 0 0 0 0]
+[6 3 6 0 4 4 4 1 1 1 0 0]
+[6 6 6 0 0 0 0 1 2 1 0 0]
+[0 0 0 0 0 0 0 1 1 1 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0]]
+Example 1:
+Input:
+[[0 0 0 0 0 0]
+[0 0 0 3 0 0]
+[0 0 0 0 0 0]
+[0 0 0 0 0 0]
+[0 0 0 0 0 0]
+[0 0 0 0 0 0]]
+Output:
+[[0 0 6 6 6 0]
+[0 0 6 3 6 0]
+[0 0 6 6 6 0]
+[0 0 0 0 0 0]
+[0 0 0 0 0 0]
+[0 0 0 0 0 0]]
+Example 2:
+Input:
+[[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]]
+Output:
+[[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 6 6 6 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 6 3 6 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 6 6 6 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 1 2 1 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]]
+Example 3:
+Input:
+[[0 0 0 0 0 0]
+[0 0 0 0 0 0]
+[0 0 8 0 0 0]
+[0 0 0 0 0 0]
+[0 0 0 0 0 0]
+[0 0 0 0 0 0]]
+Output:
+[[0 0 0 0 0 0]
+[0 4 4 4 0 0]
+[0 4 8 4 0 0]
+[0 4 4 4 0 0]
+[0 0 0 0 0 0]
+[0 0 0 0 0 0]]
+
+
+The rule is: surround green with pink color, light blue with yellow and red with blue
+
+The code that implement the rule to solve the task is:
+
+import numpy as np
+from typing import *
+black, blue, red, green, yellow, grey, pink, orange, teal, maroon = range(10)
+
+def set_elements_around_colors(input_grid: np.ndarray) -> np.ndarray:
+    """
+    Sets black elements around red element in input grid to blue elments, sets black elements around green element in input grid to pink elements, and sets black elements around teal element in input grid to yellow elements.
+
+    Args:
+    input_grid: A numpy array representing the input grid.
+
+    Returns:
+    A numpy array representing the output grid after setting the elements around the specified colors.
+    """
+    output_grid = copy_grid(input_grid)
+    for i in range(1, input_grid.shape[0] - 1):
+        for j in range(1, input_grid.shape[1] - 1):
+            if input_grid[i][j] == red:
+                output_grid[i - 1:i + 2, j - 1:j + 2][output_grid[i - 1:i + 2, j - 1:j + 2] == black] = blue
+            elif input_grid[i][j] == green:
+                output_grid[i - 1:i + 2, j - 1:j + 2][output_grid[i - 1:i + 2, j - 1:j + 2] == black] = pink
+            elif input_grid[i][j] == teal:
+                output_grid[i - 1:i + 2, j - 1:j + 2][output_grid[i - 1:i + 2, j - 1:j + 2] == black] = yellow
+    return output_grid
+
+def copy_grid(input_grid: np.ndarray) -> np.ndarray:
+    """
+    Returns a copy of the input grid.
+
+    Args:
+    input_grid: A numpy array representing the input grid.
+
+    Returns:
+    A numpy array representing a copy of the input grid.
+    """
+    return np.copy(input_grid)
+
+def main(input_grid: np.ndarray) -> np.ndarray:
+    output_grid = copy_grid(input_grid)
+    output_grid = set_elements_around_colors(output_grid)
+    return output_grid
+
+-------------------
+
+d037b0a7.json
+
+The task is: 
+Example 0:
+Input:
+[[0 0 6]
+[0 4 0]
+[3 0 0]]
+Output:
+[[0 0 6]
+[0 4 6]
+[3 4 6]]
+Example 1:
+Input:
+[[0 2 0]
+[7 0 8]
+[0 0 0]]
+Output:
+[[0 2 0]
+[7 2 8]
+[7 2 8]]
+Example 2:
+Input:
+[[4 0 0]
+[0 2 0]
+[0 0 0]]
+Output:
+[[4 0 0]
+[4 2 0]
+[4 2 0]]
+
+
+The rule is: wherever you see a color other than black make squares below that color the same color down to the border
+
+The code that implement the rule to solve the task is:
+
+import numpy as np
+from typing import *
+black, blue, red, green, yellow, grey, pink, orange, teal, maroon = range(10)
+
+def fill_blocks_below(input_grid: np.ndarray, x: int, y: int) -> np.ndarray:
+    """
+    This function takes a numpy array and the indexes of a colored block as input and fills the blocks below it with its color.
+    
+    Args:
+    input_grid: A numpy array representing the input grid.
+    x: An integer representing the row index of the colored block.
+    y: An integer representing the column index of the colored block.
+    
+    Returns:
+    A numpy array with the blocks below the colored block filled with its color.
+    """
+    color = input_grid[x][y]
+    for i in range(x + 1, input_grid.shape[0]):
+        if input_grid[i][y] == black:
+            input_grid[i][y] = color
+        else:
+            break
+    return input_grid
+
+def find_non_black_indexes(input_grid: np.ndarray) -> List[Tuple[int, int]]:
+    """
+    This function takes a numpy array as input and returns a list of tuples containing the indexes of non-black blocks in the grid.
+    
+    Args:
+    input_grid: A numpy array representing the input grid.
+    
+    Returns:
+    A list of tuples containing the indexes of non-black blocks in the grid.
+    """
+    non_black_indexes = []
+    for i in range(input_grid.shape[0]):
+        for j in range(input_grid.shape[1]):
+            if input_grid[i][j] != black:
+                non_black_indexes.append((i, j))
+    return non_black_indexes
+
+def main(input_grid: np.ndarray) -> np.ndarray:
+    colored_index_list = find_non_black_indexes(input_grid)
+    for x, y in colored_index_list:
+        input_grid = fill_blocks_below(input_grid, x, y)
+    return input_grid
+
+-------------------
+
+cce03e0d.json
+
+The task is: 
+Example 0:
+Input:
+[[1 0 0]
+[2 1 0]
+[0 0 1]]
+Output:
+[[0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0]
+[1 0 0 0 0 0 0 0 0]
+[2 1 0 0 0 0 0 0 0]
+[0 0 1 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0]]
+Example 1:
+Input:
+[[0 1 2]
+[1 1 0]
+[2 0 0]]
+Output:
+[[0 0 0 0 0 0 0 1 2]
+[0 0 0 0 0 0 1 1 0]
+[0 0 0 0 0 0 2 0 0]
+[0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0]
+[0 1 2 0 0 0 0 0 0]
+[1 1 0 0 0 0 0 0 0]
+[2 0 0 0 0 0 0 0 0]]
+Example 2:
+Input:
+[[2 1 2]
+[0 2 1]
+[2 1 0]]
+Output:
+[[2 1 2 0 0 0 2 1 2]
+[0 2 1 0 0 0 0 2 1]
+[2 1 0 0 0 0 2 1 0]
+[0 0 0 2 1 2 0 0 0]
+[0 0 0 0 2 1 0 0 0]
+[0 0 0 2 1 0 0 0 0]
+[2 1 2 0 0 0 0 0 0]
+[0 2 1 0 0 0 0 0 0]
+[2 1 0 0 0 0 0 0 0]]
+
+
+The rule is: Visualize the output grid as nine 3x3 blocks. The red squares on your input indicate which 'blocks' in your 9x9 grid you should work in. Copy the 3x3 input pattern to the 'blocks' indicated by the location of the red squares.
+
+The code that implement the rule to solve the task is:
+
+import numpy as np
+from typing import *
+black, blue, red, green, yellow, grey, pink, orange, teal, maroon = range(10)
+
+def copy_to_3x3_grid(input_grid: np.ndarray, output_grid: np.ndarray, i: int, j: int) -> np.ndarray:
+    output_grid[3 * i:3 * i + 3, 3 * j:3 * j + 3] = input_grid
+    return output_grid
+
+def make_grid() -> np.ndarray:
+    return np.zeros((9, 9), dtype=int)
+
+def main(input_grid: np.ndarray) -> np.ndarray:
+    output_grid = make_grid()
+    for i in range(3):
+        for j in range(3):
+            if input_grid[i, j] == red:
+                output_grid = copy_to_3x3_grid(input_grid, output_grid, i, j)
+    return output_grid
+
+-------------------
+
+b6afb2da.json
+
+The task is: 
+Example 0:
+Input:
+[[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 5 5 5 5 0 0 0 0 0]
+[0 5 5 5 5 0 0 0 0 0]
+[0 5 5 5 5 0 0 0 0 0]
+[0 5 5 5 5 0 5 5 5 5]
+[0 0 0 0 0 0 5 5 5 5]
+[0 0 0 0 0 0 5 5 5 5]
+[0 0 0 0 0 0 5 5 5 5]
+[0 0 0 0 0 0 5 5 5 5]]
+Output:
+[[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 1 4 4 1 0 0 0 0 0]
+[0 4 2 2 4 0 0 0 0 0]
+[0 4 2 2 4 0 0 0 0 0]
+[0 1 4 4 1 0 1 4 4 1]
+[0 0 0 0 0 0 4 2 2 4]
+[0 0 0 0 0 0 4 2 2 4]
+[0 0 0 0 0 0 4 2 2 4]
+[0 0 0 0 0 0 1 4 4 1]]
+Example 1:
+Input:
+[[5 5 5 5 5 5 0 0 0 0]
+[5 5 5 5 5 5 0 0 0 0]
+[5 5 5 5 5 5 0 0 0 0]
+[5 5 5 5 5 5 0 0 0 0]
+[5 5 5 5 5 5 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 5 5 5 5 5 5]
+[0 0 0 0 5 5 5 5 5 5]
+[0 0 0 0 5 5 5 5 5 5]
+[0 0 0 0 5 5 5 5 5 5]]
+Output:
+[[1 4 4 4 4 1 0 0 0 0]
+[4 2 2 2 2 4 0 0 0 0]
+[4 2 2 2 2 4 0 0 0 0]
+[4 2 2 2 2 4 0 0 0 0]
+[1 4 4 4 4 1 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 1 4 4 4 4 1]
+[0 0 0 0 4 2 2 2 2 4]
+[0 0 0 0 4 2 2 2 2 4]
+[0 0 0 0 1 4 4 4 4 1]]
+
+
+The rule is: the squares stay in the same place but change color. The corner become dark blue. The middle become red. The edge between the corner become yellow.
+
+The code that implement the rule to solve the task is:
+
+import numpy as np
+from typing import *
+black, blue, red, green, yellow, grey, pink, orange, teal, maroon = range(10)
+
+def paint_black_blue(copy_grid: np.ndarray, grid: np.ndarray) -> np.ndarray:
+    grey_pixels = np.where(copy_grid == grey)
+    for i in range(len(grey_pixels[0])):
+        x, y = (grey_pixels[0][i], grey_pixels[1][i])
+        neighbors = [copy_grid[x, y - 1], copy_grid[x, y + 1], copy_grid[x - 1, y], copy_grid[x + 1, y]]
+        if neighbors.count(black) >= 2:
+            grid[x, y] = blue
+    return grid
+
+def paint_grey_red(copy_grid: np.ndarray, grid: np.ndarray) -> np.ndarray:
+    grey_pixels = np.where(copy_grid == grey)
+    for i in range(len(grey_pixels[0])):
+        x, y = (grey_pixels[0][i], grey_pixels[1][i])
+        if np.array_equal(copy_grid[x - 1:x + 2, y - 1:y + 2], np.array([[grey] * 3] * 3)):
+            grid[x, y] = red
+    return grid
+
+def paint_grey_yellow(copy_grid: np.ndarray, grid: np.ndarray) -> np.ndarray:
+    grey_pixels = np.where(copy_grid == grey)
+    grid[grey_pixels] = yellow
+    return grid
+
+def pad_grid(input_grid: np.ndarray) -> np.ndarray:
+    return np.pad(input_grid, pad_width=1, mode='constant', constant_values=black)
+
+def main(input_grid: np.ndarray) -> np.ndarray:
+    grid = pad_grid(input_grid)
+    copy_grid = grid.copy()
+    grid = paint_grey_yellow(copy_grid, grid)
+    grid = paint_grey_red(copy_grid, grid)
+    grid = paint_black_blue(copy_grid, grid)
+    return grid[1:-1, 1:-1]
+
+-------------------
+
+3906de3d.json
+
+The task is: 
+Example 0:
+Input:
+[[0 0 1 1 1 1 1 0 0 0]
+[0 0 1 1 1 1 1 0 0 0]
+[0 0 1 1 0 1 1 0 0 0]
+[0 0 1 1 0 1 1 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 2 0 0 0 0 0]
+[0 0 0 0 2 0 0 0 0 0]
+[0 0 0 0 2 0 0 0 0 0]]
+Output:
+[[0 0 1 1 1 1 1 0 0 0]
+[0 0 1 1 1 1 1 0 0 0]
+[0 0 1 1 2 1 1 0 0 0]
+[0 0 1 1 2 1 1 0 0 0]
+[0 0 0 0 2 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]]
+Example 1:
+Input:
+[[0 0 1 1 1 1 1 1 1 0]
+[0 0 1 1 0 1 1 1 1 0]
+[0 0 1 1 0 1 0 1 1 0]
+[0 0 1 1 0 1 0 1 1 0]
+[0 0 0 0 0 0 0 1 1 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 2 0 0 0]
+[0 0 0 0 0 0 2 0 0 0]
+[0 0 0 0 0 0 2 0 0 0]
+[0 0 0 0 2 0 2 0 0 0]]
+Output:
+[[0 0 1 1 1 1 1 1 1 0]
+[0 0 1 1 2 1 1 1 1 0]
+[0 0 1 1 0 1 2 1 1 0]
+[0 0 1 1 0 1 2 1 1 0]
+[0 0 0 0 0 0 2 1 1 0]
+[0 0 0 0 0 0 2 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]]
+Example 2:
+Input:
+[[0 1 1 1 1 1 1 1 1 1]
+[0 1 1 0 1 1 1 1 1 1]
+[0 1 1 0 1 1 1 1 0 1]
+[0 1 1 0 0 1 0 1 0 1]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 2 0 0 0]
+[0 0 0 2 0 0 2 0 2 0]
+[0 0 0 2 2 0 2 0 2 0]
+[0 0 0 2 2 0 2 0 2 0]]
+Output:
+[[0 1 1 1 1 1 1 1 1 1]
+[0 1 1 2 1 1 1 1 1 1]
+[0 1 1 2 1 1 1 1 2 1]
+[0 1 1 2 2 1 2 1 2 1]
+[0 0 0 0 2 0 2 0 2 0]
+[0 0 0 0 0 0 2 0 0 0]
+[0 0 0 0 0 0 2 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]]
+
+
+The rule is: imagine the blue is a vacuum and sucks the red up into the open spaces.  Move all red straight up.
+
+The code that implement the rule to solve the task is:
+
+import numpy as np
+from typing import *
+black, blue, red, green, yellow, grey, pink, orange, teal, maroon = range(10)
+
+def move_red_squares_up_by_distance(grid: np.ndarray, column_distance: Tuple[int, int]) -> np.ndarray:
+    col, distance = column_distance
+    red_indices = np.where(grid[:, col] == red)[0]
+    for index in red_indices:
+        grid[index - distance, col] = red
+        grid[index, col] = black
+    return grid
+
+def generate_column_distances(output_grid: np.ndarray) -> Dict[int, int]:
+    column_distances = {}
+    for col in range(output_grid.shape[1]):
+        if red in output_grid[:, col]:
+            red_index = np.where(output_grid[:, col] == red)[0][0]
+            black_index = np.where(output_grid[:, col] == black)[0][0]
+            distance = red_index - black_index
+            column_distances[col] = distance
+    return column_distances
+
+def main(input_grid: np.ndarray) -> np.ndarray:
+    output_grid = np.copy(input_grid)
+    dict = generate_column_distances(output_grid)
+    for kv in dict.items():
+        output_grid = move_red_squares_up_by_distance(output_grid, kv)
+    return output_grid
+
+-------------------
+
+445eab21.json
+
+The task is: 
+Example 0:
+Input:
+[[0 7 7 7 7 0 0 0 0 0]
+[0 7 0 0 7 0 0 0 0 0]
+[0 7 0 0 7 0 0 0 0 0]
+[0 7 7 7 7 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 8 8 8 8 8 0 0]
+[0 0 0 8 0 0 0 8 0 0]
+[0 0 0 8 0 0 0 8 0 0]
+[0 0 0 8 8 8 8 8 0 0]
+[0 0 0 0 0 0 0 0 0 0]]
+Output:
+[[8 8]
+[8 8]]
+Example 1:
+Input:
+[[6 6 6 6 6 0 0 0 0 0]
+[6 0 0 0 6 0 0 0 0 0]
+[6 0 0 0 6 0 0 0 0 0]
+[6 6 6 6 6 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 7 7 7 7 7 7 0 0]
+[0 0 7 0 0 0 0 7 0 0]
+[0 0 7 0 0 0 0 7 0 0]
+[0 0 7 7 7 7 7 7 0 0]
+[0 0 0 0 0 0 0 0 0 0]]
+Output:
+[[7 7]
+[7 7]]
+Example 2:
+Input:
+[[0 4 4 4 4 4 4 0 0 0]
+[0 4 0 0 0 0 4 0 0 0]
+[0 4 0 0 0 0 4 0 0 0]
+[0 4 0 0 0 0 4 0 0 0]
+[0 4 0 0 0 0 4 0 0 0]
+[0 4 0 0 0 0 4 0 0 0]
+[0 4 4 4 4 4 4 0 0 0]
+[0 0 0 0 0 0 0 2 2 2]
+[0 0 0 0 0 0 0 2 0 2]
+[0 0 0 0 0 0 0 2 2 2]]
+Output:
+[[4 4]
+[4 4]]
+
+
+The rule is: fill the entire 2x2 grid with the same color of the biggest square pattern that is in the original.
+
+The code that implement the rule to solve the task is:
+
+import numpy as np
+from typing import *
+black, blue, red, green, yellow, grey, pink, orange, teal, maroon = range(10)
+
+def calculate_area_size(x_min: int, x_max: int, y_min: int, y_max: int) -> int:
+    """
+    Given the top-left and bottom-right coordinates of a rectangle, this function calculates the area size.
+
+    Args:
+    x_min: An integer representing the x-coordinate of the top-left corner of the rectangle.
+    x_max: An integer representing the x-coordinate of the bottom-right corner of the rectangle.
+    y_min: An integer representing the y-coordinate of the top-left corner of the rectangle.
+    y_max: An integer representing the y-coordinate of the bottom-right corner of the rectangle.
+
+    Returns:
+    An integer representing the area size of the rectangle.
+    """
+    return (x_max - x_min + 1) * (y_max - y_min + 1)
+
+def find_most_bottom_point(input_grid: np.ndarray, color: int) -> int:
+    for i in range(input_grid.shape[0] - 1, -1, -1):
+        for j in range(input_grid.shape[1]):
+            if input_grid[i][j] == color:
+                return i
+    return -1
+
+def find_most_top_point(input_grid: np.ndarray, color: int) -> int:
+    for i in range(input_grid.shape[0]):
+        for j in range(input_grid.shape[1]):
+            if input_grid[i][j] == color:
+                return i
+    return -1
+
+def find_most_right_point(input_grid: np.ndarray, color: int) -> int:
+    for j in range(input_grid.shape[1] - 1, -1, -1):
+        for i in range(input_grid.shape[0]):
+            if input_grid[i][j] == color:
+                return j
+    return -1
+
+def find_most_left_point(input_grid: np.ndarray, color: int) -> int:
+    for j in range(input_grid.shape[1]):
+        for i in range(input_grid.shape[0]):
+            if input_grid[i][j] == color:
+                return j
+    return -1
+
+def draw_largest_color_area(area_size_list: List[Tuple[int, int]]) -> np.ndarray:
+    sorted_list = sorted(area_size_list, key=lambda x: x[1], reverse=True)
+    largest_color = sorted_list[0][0]
+    output = np.full((2, 2), largest_color)
+    return output
+
+def find_color_areas(input_grid: np.ndarray, color_list: List[int]) -> List[Tuple[int, int]]:
+    color_areas = []
+    for color in color_list:
+        x_min = find_most_left_point(input_grid, color)
+        x_max = find_most_right_point(input_grid, color)
+        y_min = find_most_top_point(input_grid, color)
+        y_max = find_most_bottom_point(input_grid, color)
+        area = calculate_area_size(x_min, x_max, y_min, y_max)
+        color_areas.append((color, area))
+    return color_areas
+
+def find_not_black_colors(input_grid: np.ndarray) -> List[int]:
+    """
+    Given an input grid, this function returns a list of all the non-black colors present in the grid.
+
+    Args:
+    input_grid: A numpy array representing the input grid.
+
+    Returns:
+    A list of integers representing the non-black colors present in the grid.
+    """
+    color_list = []
+    for i in range(input_grid.shape[0]):
+        for j in range(input_grid.shape[1]):
+            if input_grid[i][j] != black and input_grid[i][j] not in color_list:
+                color_list.append(input_grid[i][j])
+    return color_list
+
+def main(input_grid: np.ndarray) -> np.ndarray:
+    color_list = find_not_black_colors(input_grid)
+    area_size_list = find_color_areas(input_grid, color_list)
+    output = draw_largest_color_area(area_size_list)
+    return output
+
+-------------------
+
+9dfd6313.json
+
+The task is: 
+Example 0:
+Input:
+[[5 0 0]
+[3 5 0]
+[0 0 5]]
+Output:
+[[5 3 0]
+[0 5 0]
+[0 0 5]]
+Example 1:
+Input:
+[[5 0 0 0]
+[0 5 0 0]
+[6 0 5 0]
+[6 0 4 5]]
+Output:
+[[5 0 6 6]
+[0 5 0 0]
+[0 0 5 4]
+[0 0 0 5]]
+Example 2:
+Input:
+[[5 0 0 0 0]
+[0 5 0 0 0]
+[8 8 5 0 0]
+[0 2 0 5 0]
+[0 2 0 1 5]]
+Output:
+[[5 0 8 0 0]
+[0 5 8 2 2]
+[0 0 5 0 0]
+[0 0 0 5 1]
+[0 0 0 0 5]]
+
+
+The rule is: take one side and mirror it to the other side.
+
+The code that implement the rule to solve the task is:
+
+import numpy as np
+from typing import *
+black, blue, red, green, yellow, grey, pink, orange, teal, maroon = range(10)
+
+def rotate_cw(input_grid: np.ndarray) -> np.ndarray:
+    return np.rot90(input_grid, k=-1)
+
+def flip_ud(input_grid: np.ndarray) -> np.ndarray:
+    return np.flipud(input_grid)
+
+def main(input_grid: np.ndarray) -> np.ndarray:
+    out_grid = flip_ud(input_grid)
+    out_grid = rotate_cw(out_grid)
+    return out_grid
+
+-------------------
+
+c9f8e694.json
+
+The task is: 
+Example 0:
+Input:
+[[0 0 0 0 0 0 0 0 0 0 0 0]
+[1 0 5 5 0 0 0 0 0 0 0 0]
+[2 0 5 5 0 0 0 0 0 0 0 0]
+[1 0 5 5 0 0 0 0 0 0 0 0]
+[1 0 5 5 0 0 0 0 0 0 0 0]
+[1 0 5 5 0 0 0 0 5 5 0 0]
+[2 0 5 5 0 0 0 0 5 5 0 0]
+[2 0 5 5 0 0 0 0 5 5 0 0]
+[1 0 0 0 0 0 0 0 5 5 0 0]
+[1 0 0 0 5 5 5 0 5 5 0 0]
+[1 0 0 0 5 5 5 0 5 5 0 0]
+[2 0 0 0 5 5 5 0 5 5 0 0]]
+Output:
+[[0 0 0 0 0 0 0 0 0 0 0 0]
+[1 0 1 1 0 0 0 0 0 0 0 0]
+[2 0 2 2 0 0 0 0 0 0 0 0]
+[1 0 1 1 0 0 0 0 0 0 0 0]
+[1 0 1 1 0 0 0 0 0 0 0 0]
+[1 0 1 1 0 0 0 0 1 1 0 0]
+[2 0 2 2 0 0 0 0 2 2 0 0]
+[2 0 2 2 0 0 0 0 2 2 0 0]
+[1 0 0 0 0 0 0 0 1 1 0 0]
+[1 0 0 0 1 1 1 0 1 1 0 0]
+[1 0 0 0 1 1 1 0 1 1 0 0]
+[2 0 0 0 2 2 2 0 2 2 0 0]]
+Example 1:
+Input:
+[[0 0 0 0 0 0 0 0 0 0 0 0]
+[3 5 5 5 5 0 0 0 0 0 0 0]
+[3 5 5 5 5 0 0 5 5 5 5 5]
+[4 5 5 5 5 0 0 5 5 5 5 5]
+[4 5 5 5 5 0 0 5 5 5 5 5]
+[3 0 0 0 0 0 0 5 5 5 5 5]
+[4 0 0 0 5 5 5 5 5 5 5 5]
+[3 0 0 0 5 5 5 5 5 5 5 5]
+[3 0 0 0 5 5 5 5 5 5 5 5]
+[3 0 0 0 5 5 5 5 5 5 5 5]
+[4 0 0 0 5 5 5 0 0 0 0 0]
+[4 0 0 0 5 5 5 0 0 0 0 0]]
+Output:
+[[0 0 0 0 0 0 0 0 0 0 0 0]
+[3 3 3 3 3 0 0 0 0 0 0 0]
+[3 3 3 3 3 0 0 3 3 3 3 3]
+[4 4 4 4 4 0 0 4 4 4 4 4]
+[4 4 4 4 4 0 0 4 4 4 4 4]
+[3 0 0 0 0 0 0 3 3 3 3 3]
+[4 0 0 0 4 4 4 4 4 4 4 4]
+[3 0 0 0 3 3 3 3 3 3 3 3]
+[3 0 0 0 3 3 3 3 3 3 3 3]
+[3 0 0 0 3 3 3 3 3 3 3 3]
+[4 0 0 0 4 4 4 0 0 0 0 0]
+[4 0 0 0 4 4 4 0 0 0 0 0]]
+
+
+The rule is: color the horizontal blocks the same pattern as the vertical colors
+
+The code that implement the rule to solve the task is:
+
+import numpy as np
+from typing import *
+black, blue, red, green, yellow, grey, pink, orange, teal, maroon = range(10)
+
+def paint_gray_pixels(input_grid: np.ndarray) -> np.ndarray:
+    for i in range(input_grid.shape[0]):
+        for j in range(input_grid.shape[1]):
+            if input_grid[i][j] == grey:
+                input_grid[i][j] = input_grid[i][0]
+    return input_grid
+
+def main(input_grid: np.ndarray) -> np.ndarray:
+    return paint_gray_pixels(input_grid)
+
+-------------------
+
+a79310a0.json
+
+The task is: 
+Example 0:
+Input:
+[[8 8 0 0 0]
+[8 8 0 0 0]
+[0 0 0 0 0]
+[0 0 0 0 0]
+[0 0 0 0 0]]
+Output:
+[[0 0 0 0 0]
+[2 2 0 0 0]
+[2 2 0 0 0]
+[0 0 0 0 0]
+[0 0 0 0 0]]
+Example 1:
+Input:
+[[0 8 0]
+[0 0 0]
+[0 0 0]]
+Output:
+[[0 0 0]
+[0 2 0]
+[0 0 0]]
+Example 2:
+Input:
+[[0 0 0 0 0]
+[0 8 8 8 0]
+[0 0 0 0 0]
+[0 0 0 0 0]
+[0 0 0 0 0]]
+Output:
+[[0 0 0 0 0]
+[0 0 0 0 0]
+[0 2 2 2 0]
+[0 0 0 0 0]
+[0 0 0 0 0]]
+
+
+The rule is: copy those specific shapes one block below and change the color to red
+
+The code that implement the rule to solve the task is:
+
+import numpy as np
+from typing import *
+black, blue, red, green, yellow, grey, pink, orange, teal, maroon = range(10)
+
+def make_teal_pixels_red(input_grid: np.ndarray) -> np.ndarray:
+    for i in range(input_grid.shape[0]):
+        for j in range(input_grid.shape[1]):
+            if input_grid[i][j] == teal:
+                input_grid[i][j] = red
+    return input_grid
+
+def move_non_black_pixels_to_next_row(input_grid: np.ndarray) -> np.ndarray:
+    for i in range(input_grid.shape[0] - 2, -1, -1):
+        for j in range(input_grid.shape[1]):
+            if input_grid[i][j] != black and input_grid[i + 1][j] == black:
+                input_grid[i + 1][j] = input_grid[i][j]
+                input_grid[i][j] = black
+    return input_grid
+
+def main(input_grid: np.ndarray) -> np.ndarray:
+    input_grid = move_non_black_pixels_to_next_row(input_grid)
+    input_grid = make_teal_pixels_red(input_grid)
+    return input_grid
+
+-------------------
+
+dc1df850.json
+
+The task is: 
+Example 0:
+Input:
+[[2 0 0 0 0]
+[0 0 0 2 0]
+[0 0 0 0 0]
+[0 6 0 0 0]
+[0 0 0 0 0]]
+Output:
+[[2 1 1 1 1]
+[1 1 1 2 1]
+[0 0 1 1 1]
+[0 6 0 0 0]
+[0 0 0 0 0]]
+Example 1:
+Input:
+[[0 0 0 0 0 0 0 2]
+[0 0 0 0 0 0 0 0]
+[0 0 0 3 0 0 0 0]
+[0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 8 0]
+[0 0 0 0 0 0 0 0]
+[0 0 2 0 0 0 0 0]
+[0 0 0 0 0 0 0 0]]
+Output:
+[[0 0 0 0 0 0 1 2]
+[0 0 0 0 0 0 1 1]
+[0 0 0 3 0 0 0 0]
+[0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 8 0]
+[0 1 1 1 0 0 0 0]
+[0 1 2 1 0 0 0 0]
+[0 1 1 1 0 0 0 0]]
+Example 2:
+Input:
+[[0 0 0 0 0]
+[0 2 0 0 0]
+[0 0 0 0 0]
+[0 0 0 0 0]]
+Output:
+[[1 1 1 0 0]
+[1 2 1 0 0]
+[1 1 1 0 0]
+[0 0 0 0 0]]
+
+
+The rule is: surround only the red squares with a blue border that is one square wide.
+
+The code that implement the rule to solve the task is:
+
+import numpy as np
+from typing import *
+black, blue, red, green, yellow, grey, pink, orange, teal, maroon = range(10)
+
+def color_adjacent_black_grids(input_grid: np.ndarray, red_grids: List[Tuple[int, int]]) -> np.ndarray:
+    """
+    This function takes in a numpy array as input_grid and a list of tuples containing the positions of all the red grids in the input as red_grids.
+    It colors all black grids(diagonally adjacent included) that are adjacent to the red grids with blue.
+    
+    Args:
+    input_grid: A numpy array representing the input grid
+    red_grids: A list of tuples containing the positions of all the red grids in the input.
+    
+    Returns:
+    A numpy array with the black grids adjacent to the red grids colored blue.
+    """
+    blue_grids = []
+    for r, c in red_grids:
+        for i in range(r - 1, r + 2):
+            for j in range(c - 1, c + 2):
+                if i >= 0 and j >= 0 and (i < input_grid.shape[0]) and (j < input_grid.shape[1]) and (input_grid[i][j] == black):
+                    input_grid[i][j] = blue
+                    blue_grids.append((i, j))
+    return input_grid
+
+def find_red_grids(input_grid: np.ndarray) -> List[Tuple[int, int]]:
+    """
+    This function takes in a numpy array as input_grid and returns a list of tuples containing the positions of all the red grids in the input.
+    
+    Args:
+    input_grid: A numpy array representing the input grid
+    
+    Returns:
+    A list of tuples containing the positions of all the red grids in the input.
+    """
+    red_grids = []
+    for i in range(input_grid.shape[0]):
+        for j in range(input_grid.shape[1]):
+            if input_grid[i][j] == red:
+                red_grids.append((i, j))
+    return red_grids
+
+def main(input_grid: np.ndarray) -> np.ndarray:
+    red_grids = find_red_grids(input_grid)
+    output = color_adjacent_black_grids(input_grid, red_grids)
+    return output
+
+-------------------
+
+8403a5d5.json
+
+The task is: 
+Example 0:
+Input:
+[[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 2 0 0 0 0 0 0 0 0]]
+Output:
+[[0 2 5 2 0 2 5 2 0 2]
+[0 2 0 2 0 2 0 2 0 2]
+[0 2 0 2 0 2 0 2 0 2]
+[0 2 0 2 0 2 0 2 0 2]
+[0 2 0 2 0 2 0 2 0 2]
+[0 2 0 2 0 2 0 2 0 2]
+[0 2 0 2 0 2 0 2 0 2]
+[0 2 0 2 0 2 0 2 0 2]
+[0 2 0 2 0 2 0 2 0 2]
+[0 2 0 2 5 2 0 2 5 2]]
+Example 1:
+Input:
+[[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 3 0 0 0 0]]
+Output:
+[[0 0 0 0 0 3 5 3 0 3]
+[0 0 0 0 0 3 0 3 0 3]
+[0 0 0 0 0 3 0 3 0 3]
+[0 0 0 0 0 3 0 3 0 3]
+[0 0 0 0 0 3 0 3 0 3]
+[0 0 0 0 0 3 0 3 0 3]
+[0 0 0 0 0 3 0 3 0 3]
+[0 0 0 0 0 3 0 3 0 3]
+[0 0 0 0 0 3 0 3 0 3]
+[0 0 0 0 0 3 0 3 5 3]]
+Example 2:
+Input:
+[[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 0 0 0 0 0 0]
+[0 0 0 0 4 0 0 0 0 0]]
+Output:
+[[0 0 0 0 4 5 4 0 4 5]
+[0 0 0 0 4 0 4 0 4 0]
+[0 0 0 0 4 0 4 0 4 0]
+[0 0 0 0 4 0 4 0 4 0]
+[0 0 0 0 4 0 4 0 4 0]
+[0 0 0 0 4 0 4 0 4 0]
+[0 0 0 0 4 0 4 0 4 0]
+[0 0 0 0 4 0 4 0 4 0]
+[0 0 0 0 4 0 4 0 4 0]
+[0 0 0 0 4 0 4 5 4 0]]
+
+
+The rule is: fill the grid color of input for one vertical line and leave the next vertical line black and fill the next vertical line with input color and repeat this starting the input grid color from left to right.
+
+The code that implement the rule to solve the task is:
+
+import numpy as np
+from typing import *
+black, blue, red, green, yellow, grey, pink, orange, teal, maroon = range(10)
+
+def replace_last_element_with_grey(output_grid: np.ndarray, i: int, col: int) -> np.ndarray:
+    if (i - col) % 4 == 3:
+        output_grid[-1, i] = grey
+    return output_grid
+
+def replace_odd_column_with_grey(output_grid: np.ndarray, i: int, col: int) -> np.ndarray:
+    if (i - col) % 4 == 1:
+        output_grid[0, i] = grey
+    return output_grid
+
+def replace_even_column_with_element(output_grid: np.ndarray, i: int, col: int, ele: int) -> np.ndarray:
+    if (i - col) % 2 == 0:
+        output_grid[:, i] = ele
+    return output_grid
+
+def find_non_zero_element(input_grid: np.ndarray) -> Tuple[int, int]:
+    non_zero_indices = np.nonzero(input_grid)
+    return (non_zero_indices[1][0], input_grid[non_zero_indices][0])
+
+def create_black_grid(input_grid: np.ndarray) -> np.ndarray:
+    return np.zeros_like(input_grid)
+
+def main(input_grid: np.ndarray) -> np.ndarray:
+    output_grid = create_black_grid(input_grid)
+    col, ele = find_non_zero_element(input_grid)
+    for i in range(input_grid.shape[1]):
+        if i >= col:
+            output_grid = replace_even_column_with_element(output_grid, i, col, ele)
+            output_grid = replace_odd_column_with_grey(output_grid, i, col)
+            output_grid = replace_last_element_with_grey(output_grid, i, col)
+    return output_grid
+
+-------------------
+
+cf98881b.json
+
+The task is: 
+Example 0:
+Input:
+[[0 4 0 4 2 9 9 0 0 2 0 0 0 0]
+[0 4 0 0 2 0 0 9 9 2 0 1 0 0]
+[4 0 0 0 2 0 0 0 0 2 1 1 1 0]
+[4 4 4 4 2 9 0 9 0 2 1 1 0 1]]
+Output:
+[[9 4 0 4]
+[0 4 9 9]
+[4 1 1 0]
+[4 4 4 4]]
+Example 1:
+Input:
+[[4 4 4 4 2 9 0 9 0 2 0 0 0 1]
+[4 4 0 0 2 9 9 0 0 2 1 0 0 0]
+[4 0 4 4 2 0 0 0 9 2 0 1 0 1]
+[0 0 0 0 2 0 0 9 0 2 1 0 1 0]]
+Output:
+[[4 4 4 4]
+[4 4 0 0]
+[4 1 4 4]
+[1 0 9 0]]
+Example 2:
+Input:
+[[4 4 4 0 2 9 9 0 9 2 0 1 0 1]
+[0 4 0 4 2 0 0 9 0 2 0 1 0 0]
+[0 4 0 4 2 0 0 9 9 2 1 0 0 1]
+[4 0 4 4 2 9 9 9 0 2 0 0 0 1]]
+Output:
+[[4 4 4 9]
+[0 4 9 4]
+[1 4 9 4]
+[4 9 4 4]]
+Example 3:
+Input:
+[[0 0 0 4 2 0 0 0 9 2 0 0 0 0]
+[4 4 0 4 2 9 0 9 0 2 0 0 0 0]
+[4 0 4 4 2 0 9 9 0 2 1 1 0 1]
+[0 4 4 4 2 0 9 0 0 2 1 1 1 1]]
+Output:
+[[0 0 0 4]
+[4 4 9 4]
+[4 9 4 4]
+[1 4 4 4]]
+Example 4:
+Input:
+[[4 0 4 0 2 0 0 0 0 2 0 0 0 1]
+[4 4 4 4 2 0 0 0 9 2 1 1 0 0]
+[0 4 4 4 2 0 9 9 0 2 1 1 0 1]
+[0 4 4 0 2 0 0 9 0 2 0 1 0 1]]
+Output:
+[[4 0 4 1]
+[4 4 4 4]
+[1 4 4 4]
+[0 4 4 1]]
+
+
+The rule is: copy the blue design first, then overlay the dark red design over that, finally overlay the yellow design over that as well. The yellow design will be most visible.
+
+The code that implement the rule to solve the task is:
+
+import numpy as np
+from typing import *
+black, blue, red, green, yellow, grey, pink, orange, teal, maroon = range(10)
+
+def copy_non_black_pixels(output_grid: np.ndarray, grid: np.ndarray) -> np.ndarray:
+    for i in range(grid.shape[0]):
+        for j in range(grid.shape[1]):
+            if grid[i, j] != black:
+                output_grid[i, j] = grid[i, j]
+    return output_grid
+
+def divide_grid_by_red_columns(grid: np.ndarray) -> List[np.ndarray]:
+    divided_grids = []
+    start_col = 0
+    for j in range(grid.shape[1]):
+        if np.all(grid[:, j] == red):
+            divided_grids.append(grid[:, start_col:j])
+            start_col = j + 1
+    divided_grids.append(grid[:, start_col:])
+    return divided_grids[:-1][::-1]
+
+def main(input_grid: np.ndarray) -> np.ndarray:
+    input_grid = np.concatenate((input_grid, np.array([[2], [2], [2], [2]])), axis=1)
+    divided_grids = divide_grid_by_red_columns(input_grid)
+    output_grid = np.zeros((4, 4))
+    for grid in divided_grids:
+        output_grid = copy_non_black_pixels(output_grid, grid)
+    return output_grid
+
+-------------------
+

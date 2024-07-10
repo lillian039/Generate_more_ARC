@@ -1,0 +1,6 @@
+**/__pycache__/
+**/result/
+**/log/
+.DS_Store
+src/utils/caching/cached_data/
+img/
