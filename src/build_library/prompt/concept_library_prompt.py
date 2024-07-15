@@ -124,3 +124,85 @@ Task 10:
 
 The rule should be clear, concise, and easy to understand for the students. The steps should be no more than three.
 """
+
+def get_prompt_for_hypotheses1(transformed_list, original_hypo):
+        return f"""
+Please generate hypotheses for the given input images.
+
+{transformed_list}
+
+This is the original transformation hypothesis. Please generate new hypotheses based on the given examples.
+The hypotheses must be executable on the given input examples. Include necessary imports in the function.
+The hypotheses should be different from the original hypothesis, and different from each other. Utilize the transformation definitions in the concept library.
+Hypothesis 1 for the given input images:
+{original_hypo}
+
+Hypothesis 2 for the given input images:
+[Hypothesis 2]
+
+```python
+def transform_grid(input_grid: np.ndarray[int]) -> np.ndarray[int]:
+    # Your code here, apply your transformation hypothesis to the input
+    return output
+```
+
+Hypothesis 3 for the given input images:
+[Hypothesis 3]
+
+```python
+def transform_grid(input_grid: np.ndarray[int]) -> np.ndarray[int]:
+    # Your code here, apply your transformation hypothesis to the input
+    return output
+```
+
+The generated hypotheses should be no more than one sentence long.
+"""     
+
+def get_prompt_for_hypotheses2(transformed_list, hint):
+        hint_str = ""
+        for i, h in enumerate(hint):
+                hint_str += f"{i}. {h}\n"
+        return f"""
+Please generate hypotheses for the given input images.
+
+{transformed_list}
+
+This is the original transformation hypothesis. Please generate new hypotheses based on the given examples.
+The hypotheses must be executable on the given input examples. Include necessary imports in the function.
+The hypothese must include the following hint:
+{hint_str}
+
+You can do various combinations and add more modification of transformations to generate new hypotheses. Differentiate the hypotheses from each other.
+
+Hypothesis 1 for the given input images:
+[Hypothesis 1]
+
+```python
+def transform_grid(input_grid: np.ndarray[int]) -> np.ndarray[int]:
+    # Hypothesis
+    # Your code here, apply your transformation hypothesis to the input
+    
+    return output
+```
+
+Hypothesis 2 for the given input images:
+[Hypothesis 2]
+
+```python
+def transform_grid(input_grid: np.ndarray[int]) -> np.ndarray[int]:
+    # Hypothesis
+    # Your code here, apply your transformation hypothesis to the input
+    return output
+```
+
+Hypothesis 3 for the given input images:
+[Hypothesis 3]
+
+```python
+def transform_grid(input_grid: np.ndarray[int]) -> np.ndarray[int]:
+    # Hypothesis
+    # Your code here, apply your transformation hypothesis to the input
+    return output
+```
+The generated hypotheses should be no more than one sentence long.
+"""     
