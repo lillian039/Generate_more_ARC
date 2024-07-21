@@ -1,0 +1,213 @@
+{
+    "name": "c8f0f002.json",
+    "train": [
+        {
+            "input": [
+                [
+                    1,
+                    8,
+                    8,
+                    7,
+                    7,
+                    8
+                ],
+                [
+                    1,
+                    1,
+                    7,
+                    7,
+                    1,
+                    8
+                ],
+                [
+                    7,
+                    1,
+                    1,
+                    7,
+                    7,
+                    8
+                ]
+            ],
+            "output": [
+                [
+                    1,
+                    8,
+                    8,
+                    5,
+                    5,
+                    8
+                ],
+                [
+                    1,
+                    1,
+                    5,
+                    5,
+                    1,
+                    8
+                ],
+                [
+                    5,
+                    1,
+                    1,
+                    5,
+                    5,
+                    8
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    7,
+                    7,
+                    7,
+                    1
+                ],
+                [
+                    1,
+                    8,
+                    1,
+                    7
+                ],
+                [
+                    7,
+                    1,
+                    1,
+                    7
+                ]
+            ],
+            "output": [
+                [
+                    5,
+                    5,
+                    5,
+                    1
+                ],
+                [
+                    1,
+                    8,
+                    1,
+                    5
+                ],
+                [
+                    5,
+                    1,
+                    1,
+                    5
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    1,
+                    8,
+                    1,
+                    7,
+                    1
+                ],
+                [
+                    7,
+                    8,
+                    8,
+                    1,
+                    1
+                ],
+                [
+                    7,
+                    1,
+                    8,
+                    8,
+                    7
+                ]
+            ],
+            "output": [
+                [
+                    1,
+                    8,
+                    1,
+                    5,
+                    1
+                ],
+                [
+                    5,
+                    8,
+                    8,
+                    1,
+                    1
+                ],
+                [
+                    5,
+                    1,
+                    8,
+                    8,
+                    5
+                ]
+            ]
+        }
+    ],
+    "test": [
+        {
+            "input": [
+                [
+                    1,
+                    7,
+                    7,
+                    1,
+                    7
+                ],
+                [
+                    8,
+                    1,
+                    7,
+                    7,
+                    7
+                ],
+                [
+                    8,
+                    7,
+                    1,
+                    7,
+                    8
+                ]
+            ],
+            "output": [
+                [
+                    1,
+                    5,
+                    5,
+                    1,
+                    5
+                ],
+                [
+                    8,
+                    1,
+                    5,
+                    5,
+                    5
+                ],
+                [
+                    8,
+                    5,
+                    1,
+                    5,
+                    8
+                ]
+            ]
+        }
+    ],
+    "descriptions": [
+        {
+            "see_description": "In the input, you should see...blue and yellow colors",
+            "grid_description": "The output grid size...is the same as the input grid size",
+            "do_description": "To make the output, you have to...change the yellow grids into grey one",
+            "confidence": 10
+        },
+        {
+            "see_description": "In the input, you should see...blue grid with yellow grid",
+            "grid_description": "The output grid size...same as  input",
+            "do_description": "To make the output, you have to...replace yellow grid with grey",
+            "confidence": 10
+        }
+    ]
+}

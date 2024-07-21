@@ -1,0 +1,135 @@
+{
+    "name": "e9afcf9a.json",
+    "train": [
+        {
+            "input": [
+                [
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3
+                ],
+                [
+                    9,
+                    9,
+                    9,
+                    9,
+                    9,
+                    9
+                ]
+            ],
+            "output": [
+                [
+                    3,
+                    9,
+                    3,
+                    9,
+                    3,
+                    9
+                ],
+                [
+                    9,
+                    3,
+                    9,
+                    3,
+                    9,
+                    3
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4
+                ],
+                [
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
+                    8
+                ]
+            ],
+            "output": [
+                [
+                    4,
+                    8,
+                    4,
+                    8,
+                    4,
+                    8
+                ],
+                [
+                    8,
+                    4,
+                    8,
+                    4,
+                    8,
+                    4
+                ]
+            ]
+        }
+    ],
+    "test": [
+        {
+            "input": [
+                [
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6
+                ],
+                [
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2
+                ]
+            ],
+            "output": [
+                [
+                    6,
+                    2,
+                    6,
+                    2,
+                    6,
+                    2
+                ],
+                [
+                    2,
+                    6,
+                    2,
+                    6,
+                    2,
+                    6
+                ]
+            ]
+        }
+    ],
+    "descriptions": [
+        {
+            "see_description": "In the input, you should see... like it",
+            "grid_description": "The output grid size... good",
+            "do_description": "To make the output, you have to... nice",
+            "confidence": 10
+        },
+        {
+            "see_description": "In the input, you should see...a pattern with two colors",
+            "grid_description": "The output grid size...keep the same",
+            "do_description": "To make the output, you have to...start with the color that is on the top. Fill in that line with that color every other square, begin with first square. Fill in the rest in that line with the second color. For the next line, start with the color that is already there (the second color) and fill in in the same every other square pattern. It should look like a game board. The first color in every line is the color of the input grid",
+            "confidence": 9
+        }
+    ]
+}

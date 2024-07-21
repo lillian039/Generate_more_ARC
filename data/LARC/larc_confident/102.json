@@ -1,0 +1,213 @@
+{
+    "name": "44f52bb0.json",
+    "train": [
+        {
+            "input": [
+                [
+                    2,
+                    0,
+                    2
+                ],
+                [
+                    0,
+                    2,
+                    0
+                ],
+                [
+                    2,
+                    0,
+                    2
+                ]
+            ],
+            "output": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    2,
+                    0,
+                    0
+                ],
+                [
+                    2,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    2,
+                    0
+                ]
+            ],
+            "output": [
+                [
+                    7
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    2,
+                    0,
+                    2
+                ],
+                [
+                    2,
+                    0,
+                    2
+                ],
+                [
+                    2,
+                    0,
+                    2
+                ]
+            ],
+            "output": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    2,
+                    0,
+                    2
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "output": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    2,
+                    2,
+                    0
+                ],
+                [
+                    0,
+                    2,
+                    2
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "output": [
+                [
+                    7
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    2,
+                    2,
+                    0
+                ],
+                [
+                    0,
+                    2,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "output": [
+                [
+                    7
+                ]
+            ]
+        }
+    ],
+    "test": [
+        {
+            "input": [
+                [
+                    2,
+                    0,
+                    2
+                ],
+                [
+                    2,
+                    2,
+                    2
+                ],
+                [
+                    2,
+                    0,
+                    2
+                ]
+            ],
+            "output": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    2,
+                    0,
+                    0
+                ],
+                [
+                    2,
+                    0,
+                    0
+                ]
+            ],
+            "output": [
+                [
+                    7
+                ]
+            ]
+        }
+    ],
+    "descriptions": [
+        {
+            "see_description": "In the input, you should see....a 3x3 grid with black and pink squares. There colors are the same for each input grid but the site of the colors are different.",
+            "grid_description": "The output grid size...a 1x1 grid",
+            "do_description": "To make the output, you have to....fill in the first, second and last with blue and fill in the other three with yellow.",
+            "confidence": 10
+        },
+        {
+            "see_description": "In the input, you should see...a 3x3 grid with black and pink squares.  There colors are the same for each input grid but the site of the colors are different.",
+            "grid_description": "The output grid size...a 1x1 grid.",
+            "do_description": "To make the output, you have to...fill in the first, second and last with blue and fill in the other three with yellow.",
+            "confidence": 9
+        }
+    ]
+}

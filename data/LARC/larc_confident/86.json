@@ -1,0 +1,219 @@
+{
+    "name": "3c9b0459.json",
+    "train": [
+        {
+            "input": [
+                [
+                    2,
+                    2,
+                    1
+                ],
+                [
+                    2,
+                    1,
+                    2
+                ],
+                [
+                    2,
+                    8,
+                    1
+                ]
+            ],
+            "output": [
+                [
+                    1,
+                    8,
+                    2
+                ],
+                [
+                    2,
+                    1,
+                    2
+                ],
+                [
+                    1,
+                    2,
+                    2
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    9,
+                    2,
+                    4
+                ],
+                [
+                    2,
+                    4,
+                    4
+                ],
+                [
+                    2,
+                    9,
+                    2
+                ]
+            ],
+            "output": [
+                [
+                    2,
+                    9,
+                    2
+                ],
+                [
+                    4,
+                    4,
+                    2
+                ],
+                [
+                    4,
+                    2,
+                    9
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    8,
+                    8,
+                    8
+                ],
+                [
+                    5,
+                    5,
+                    8
+                ],
+                [
+                    8,
+                    5,
+                    5
+                ]
+            ],
+            "output": [
+                [
+                    5,
+                    5,
+                    8
+                ],
+                [
+                    8,
+                    5,
+                    5
+                ],
+                [
+                    8,
+                    8,
+                    8
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    3,
+                    2,
+                    9
+                ],
+                [
+                    9,
+                    9,
+                    9
+                ],
+                [
+                    2,
+                    3,
+                    3
+                ]
+            ],
+            "output": [
+                [
+                    3,
+                    3,
+                    2
+                ],
+                [
+                    9,
+                    9,
+                    9
+                ],
+                [
+                    9,
+                    2,
+                    3
+                ]
+            ]
+        }
+    ],
+    "test": [
+        {
+            "input": [
+                [
+                    6,
+                    4,
+                    4
+                ],
+                [
+                    6,
+                    6,
+                    4
+                ],
+                [
+                    4,
+                    6,
+                    7
+                ]
+            ],
+            "output": [
+                [
+                    7,
+                    6,
+                    4
+                ],
+                [
+                    4,
+                    6,
+                    6
+                ],
+                [
+                    4,
+                    4,
+                    6
+                ]
+            ]
+        }
+    ],
+    "descriptions": [
+        {
+            "see_description": "In the input, you should see...colored blocks in a grid",
+            "grid_description": "The output grid size...same as input",
+            "do_description": "To make the output, you have to...rotate the grid 180 degrees clockwise. That's it. Just fill in the grid with the original colors as if the grid rotated twice to the right (180 degrees).",
+            "confidence": 10
+        },
+        {
+            "see_description": "In the input, you should see...Change position for every grid.",
+            "grid_description": "The output grid size...Change position for every grid.",
+            "do_description": "To make the output, you have to...change position for every grid..",
+            "confidence": 10
+        },
+        {
+            "see_description": "In the input, you should see...3by3 grid",
+            "grid_description": "The output grid size...remains the same",
+            "do_description": "To make the output, you have to...reflect the grid",
+            "confidence": 10
+        },
+        {
+            "see_description": "In the input, you should see... a grid of colored pixels.",
+            "grid_description": "The output grid size... is the same as the input.",
+            "do_description": "To make the output, you have to...  Create the same pattern as the input, just rotated 180 degrees.  Done.",
+            "confidence": 9
+        },
+        {
+            "see_description": "In the input, you should see...pattern rectangle",
+            "grid_description": "The output grid size...turn twice",
+            "do_description": "To make the output, you have to...turn color block",
+            "confidence": 10
+        }
+    ]
+}

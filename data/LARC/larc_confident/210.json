@@ -1,0 +1,327 @@
+{
+    "name": "8d5021e8.json",
+    "train": [
+        {
+            "input": [
+                [
+                    0,
+                    8
+                ],
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    8
+                ]
+            ],
+            "output": [
+                [
+                    8,
+                    0,
+                    0,
+                    8
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    8,
+                    0,
+                    0,
+                    8
+                ],
+                [
+                    8,
+                    0,
+                    0,
+                    8
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    8,
+                    0,
+                    0,
+                    8
+                ],
+                [
+                    8,
+                    0,
+                    0,
+                    8
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    8,
+                    0,
+                    0,
+                    8
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    2,
+                    0
+                ],
+                [
+                    2,
+                    2
+                ],
+                [
+                    2,
+                    0
+                ]
+            ],
+            "output": [
+                [
+                    0,
+                    2,
+                    2,
+                    0
+                ],
+                [
+                    2,
+                    2,
+                    2,
+                    2
+                ],
+                [
+                    0,
+                    2,
+                    2,
+                    0
+                ],
+                [
+                    0,
+                    2,
+                    2,
+                    0
+                ],
+                [
+                    2,
+                    2,
+                    2,
+                    2
+                ],
+                [
+                    0,
+                    2,
+                    2,
+                    0
+                ],
+                [
+                    0,
+                    2,
+                    2,
+                    0
+                ],
+                [
+                    2,
+                    2,
+                    2,
+                    2
+                ],
+                [
+                    0,
+                    2,
+                    2,
+                    0
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    5
+                ],
+                [
+                    5,
+                    0
+                ]
+            ],
+            "output": [
+                [
+                    0,
+                    5,
+                    5,
+                    0
+                ],
+                [
+                    5,
+                    0,
+                    0,
+                    5
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    5,
+                    0,
+                    0,
+                    5
+                ],
+                [
+                    0,
+                    5,
+                    5,
+                    0
+                ],
+                [
+                    0,
+                    5,
+                    5,
+                    0
+                ],
+                [
+                    5,
+                    0,
+                    0,
+                    5
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ]
+        }
+    ],
+    "test": [
+        {
+            "input": [
+                [
+                    3,
+                    3
+                ],
+                [
+                    3,
+                    0
+                ],
+                [
+                    3,
+                    3
+                ]
+            ],
+            "output": [
+                [
+                    3,
+                    3,
+                    3,
+                    3
+                ],
+                [
+                    0,
+                    3,
+                    3,
+                    0
+                ],
+                [
+                    3,
+                    3,
+                    3,
+                    3
+                ],
+                [
+                    3,
+                    3,
+                    3,
+                    3
+                ],
+                [
+                    0,
+                    3,
+                    3,
+                    0
+                ],
+                [
+                    3,
+                    3,
+                    3,
+                    3
+                ],
+                [
+                    3,
+                    3,
+                    3,
+                    3
+                ],
+                [
+                    0,
+                    3,
+                    3,
+                    0
+                ],
+                [
+                    3,
+                    3,
+                    3,
+                    3
+                ]
+            ]
+        }
+    ],
+    "descriptions": [
+        {
+            "see_description": "In the input, you should see...  four black box and two colored box",
+            "grid_description": "The output grid size... doubled in back twice in down",
+            "do_description": "To make the output, you have to...add the reverse input on the back then do two more time",
+            "confidence": 8
+        },
+        {
+            "see_description": "In the input, you should see...four black box and two colored box",
+            "grid_description": "The output grid size...doubled in back twice in down",
+            "do_description": "To make the output, you have to... add reverse input on the back then do two more time",
+            "confidence": 10
+        },
+        {
+            "see_description": "In the input, you should see...four block box and two colored box.",
+            "grid_description": "The output grid size...Doubled in back twice in down.",
+            "do_description": "To make the output, you have to...Add the reverse input on the back .",
+            "confidence": 10
+        },
+        {
+            "see_description": "In the input, you should see...Four black boxes and two boxes of another color",
+            "grid_description": "The output grid size...is six of the input grid, two wide and three long",
+            "do_description": "To make the output, you have to...put the input grid in the center of output grid. then create repeat the patterns but flip them",
+            "confidence": 10
+        },
+        {
+            "see_description": "In the input, you should see...four black box and two colored box 2x3",
+            "grid_description": "The output grid size...double in back twice in down 5x9",
+            "do_description": "To make the output, you have to...add the reverse input on the back then do two more time",
+            "confidence": 10
+        }
+    ]
+}

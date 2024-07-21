@@ -1,0 +1,207 @@
+{
+    "name": "c9e6f938.json",
+    "train": [
+        {
+            "input": [
+                [
+                    0,
+                    7,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    7
+                ],
+                [
+                    0,
+                    7,
+                    7
+                ]
+            ],
+            "output": [
+                [
+                    0,
+                    7,
+                    0,
+                    0,
+                    7,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    7,
+                    7,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    7,
+                    7,
+                    7,
+                    7,
+                    0
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    7,
+                    7
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "output": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    7,
+                    7,
+                    7,
+                    7,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    7,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "output": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    7,
+                    0,
+                    0,
+                    0,
+                    0,
+                    7
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ]
+        }
+    ],
+    "test": [
+        {
+            "input": [
+                [
+                    7,
+                    7,
+                    0
+                ],
+                [
+                    0,
+                    7,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    7
+                ]
+            ],
+            "output": [
+                [
+                    7,
+                    7,
+                    0,
+                    0,
+                    7,
+                    7
+                ],
+                [
+                    0,
+                    7,
+                    0,
+                    0,
+                    7,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    7,
+                    7,
+                    0,
+                    0
+                ]
+            ]
+        }
+    ],
+    "descriptions": [
+        {
+            "see_description": "In the input, you should see... a simple 3x3 pattern of orange and black dots.",
+            "grid_description": "The output grid size... doubles horizontally, so instead of 3x6 it's now 6x3.",
+            "do_description": "To make the output, you have to... copy the original pattern to the left half of the grid, then mirror it on the right, like an inkblot.",
+            "confidence": 8
+        },
+        {
+            "see_description": "In the input, you should see...the orange grid only",
+            "grid_description": "The output grid size...two times the row, but same height!",
+            "do_description": "To make the output, you have to...make the pattern mirror as left-right with the same height and twice the row.",
+            "confidence": 10
+        },
+        {
+            "see_description": "In the input, you should see...orange squares on a black background.",
+            "grid_description": "The output grid size...is 6x3.",
+            "do_description": "To make the output, you have to...make an identical grid next to it with same pattern as input grid.",
+            "confidence": 9
+        }
+    ]
+}

@@ -20,9 +20,15 @@ def load_arc_subset():
 def transform_input_list(input_list):
     represent_str = ""
     for input_example in input_list:
-        for row in input_example:
-            represent_str += str(row) + '\n'
+        for i, row in enumerate(input_example):
+            if i == 0:
+                represent_str += '[' + str(row) + ',\n'
+            elif i != len(input_example) - 1:
+                represent_str += str(row) + ',\n'
+            else:
+                represent_str += str(row) + ']\n'
         represent_str += '\n'
+    return represent_str
     # print(represent_str)
 
 def extract_python_code(content_response):
@@ -52,7 +58,9 @@ def generate_output_by_code(input_list, code):
     original_code = code
     outputs = []
     for input_example in input_list:
+        # print(input_example)
         code = original_code + f"\nprint(transform_grid(np.array({input_example})))\n"
+        # print(code)
         code_id = hashlib.md5(str(code).encode('utf-8')).hexdigest()
         try:
             with open(f'result/{code_id}_output.txt', 'w') as file:

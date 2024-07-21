@@ -14,6 +14,9 @@ def transform_color_into_number(list_color):
     for row in list_color:
         new_row = []
         for color in row:
-            new_row.append(list(color_map.keys())[list(color_map.values()).index(color)])
+            if color not in color_map.values():
+                new_row.append(-1)            
+            else:
+                new_row.append(list(color_map.keys())[list(color_map.values()).index(color)])
         new_list.append(new_row)
     return new_list

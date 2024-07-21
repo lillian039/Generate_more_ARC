@@ -1,0 +1,249 @@
+{
+    "name": "6e02f1e3.json",
+    "train": [
+        {
+            "input": [
+                [
+                    2,
+                    2,
+                    2
+                ],
+                [
+                    3,
+                    2,
+                    3
+                ],
+                [
+                    3,
+                    3,
+                    3
+                ]
+            ],
+            "output": [
+                [
+                    5,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    5,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    5
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    3,
+                    3,
+                    3
+                ],
+                [
+                    4,
+                    2,
+                    2
+                ],
+                [
+                    4,
+                    4,
+                    2
+                ]
+            ],
+            "output": [
+                [
+                    0,
+                    0,
+                    5
+                ],
+                [
+                    0,
+                    5,
+                    0
+                ],
+                [
+                    5,
+                    0,
+                    0
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    4,
+                    4,
+                    4
+                ],
+                [
+                    4,
+                    4,
+                    4
+                ],
+                [
+                    4,
+                    4,
+                    4
+                ]
+            ],
+            "output": [
+                [
+                    5,
+                    5,
+                    5
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    3,
+                    3,
+                    3
+                ],
+                [
+                    3,
+                    3,
+                    3
+                ],
+                [
+                    3,
+                    3,
+                    3
+                ]
+            ],
+            "output": [
+                [
+                    5,
+                    5,
+                    5
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    4,
+                    4,
+                    4
+                ],
+                [
+                    4,
+                    4,
+                    4
+                ],
+                [
+                    3,
+                    3,
+                    3
+                ]
+            ],
+            "output": [
+                [
+                    5,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    5,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    5
+                ]
+            ]
+        }
+    ],
+    "test": [
+        {
+            "input": [
+                [
+                    4,
+                    4,
+                    4
+                ],
+                [
+                    2,
+                    3,
+                    2
+                ],
+                [
+                    3,
+                    2,
+                    3
+                ]
+            ],
+            "output": [
+                [
+                    0,
+                    0,
+                    5
+                ],
+                [
+                    0,
+                    5,
+                    0
+                ],
+                [
+                    5,
+                    0,
+                    0
+                ]
+            ]
+        }
+    ],
+    "descriptions": [
+        {
+            "see_description": "In the input, you should see...a 3x3 grid that may have between 1 and 3 colors.",
+            "grid_description": "The output grid size...it stays the same.",
+            "do_description": "To make the output, you have to...place 3 grey boxes in various spots based on how many colors there are in the input grid. If there is one color, put 3 grey boxes on the top of the grid. If there are two colors, place a diagonal line of grey boxes form top left to bottom right. If there are 3 colors, place a diagonal line of grey boxes going from bottom left to top right.",
+            "confidence": 10
+        },
+        {
+            "see_description": "In the input, you should see... a 3x3 grid of 1-3 colors.",
+            "grid_description": "The output grid size...is the same as the input grid",
+            "do_description": "To make the output, you have to... place 3 gray pixels based on how many colors are in the grid. If it is one color place 3 gray pixels along the top of the grid. If there are two colors make a diagonal line from the top left to the bottom right. If there are three colors make a diagonal line from the top right to the bottom left.",
+            "confidence": 10
+        },
+        {
+            "see_description": "In the input, you should see...an image with 1 to 3 colors",
+            "grid_description": "The output grid size...stays the same",
+            "do_description": "To make the output, you have to...make a black and gray pattern depending on the number of colors in the input.  Start with an all black grid.  If there is one color, make the top 3 squares gray.  If there are two colors, make a diagonal line from top left to bottom right gray, again 3 pixels.  If there are three colors, make a diagonal line from top right to bottom left gray, again 3 pixels.",
+            "confidence": 9
+        },
+        {
+            "see_description": "In the input, you should see...A 3 x 3 grid of color squares.",
+            "grid_description": "The output grid size...Copy the input grid",
+            "do_description": "To make the output, you have to...When three colors are present make a grey diagonal line from top right to bottom left.  If there are two colors make a grey diagonal line from top left to bottom right.  If there is one color make a grey line across the top three blocks.",
+            "confidence": 10
+        }
+    ]
+}

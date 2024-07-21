@@ -1,0 +1,129 @@
+{
+    "name": "6150a2bd.json",
+    "train": [
+        {
+            "input": [
+                [
+                    3,
+                    3,
+                    8
+                ],
+                [
+                    3,
+                    7,
+                    0
+                ],
+                [
+                    5,
+                    0,
+                    0
+                ]
+            ],
+            "output": [
+                [
+                    0,
+                    0,
+                    5
+                ],
+                [
+                    0,
+                    7,
+                    3
+                ],
+                [
+                    8,
+                    3,
+                    3
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    5,
+                    5,
+                    2
+                ],
+                [
+                    1,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "output": [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    1
+                ],
+                [
+                    2,
+                    5,
+                    5
+                ]
+            ]
+        }
+    ],
+    "test": [
+        {
+            "input": [
+                [
+                    6,
+                    3,
+                    5
+                ],
+                [
+                    6,
+                    8,
+                    0
+                ],
+                [
+                    4,
+                    0,
+                    0
+                ]
+            ],
+            "output": [
+                [
+                    0,
+                    0,
+                    4
+                ],
+                [
+                    0,
+                    8,
+                    6
+                ],
+                [
+                    5,
+                    3,
+                    6
+                ]
+            ]
+        }
+    ],
+    "descriptions": [
+        {
+            "see_description": "In the input, you should see... a black grid with a colored shape",
+            "grid_description": "The output grid size... is the same as the input grid",
+            "do_description": "To make the output, you have to... rotate the whole grid two times. Imagine that the entire grid has been flipped vertically and horizontally.",
+            "confidence": 8
+        },
+        {
+            "see_description": "In the input, you should see...a small black grid with a multicolored shape in it.",
+            "grid_description": "The output grid size....is the same as the input.",
+            "do_description": "To make the output, you have to...imagine that the entire grid has been flipped both horizontally and vertically. Once you picture it, you can create the output grid.",
+            "confidence": 10
+        }
+    ]
+}

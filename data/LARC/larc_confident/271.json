@@ -1,0 +1,285 @@
+{
+    "name": "aedd82e4.json",
+    "train": [
+        {
+            "input": [
+                [
+                    0,
+                    2,
+                    2
+                ],
+                [
+                    0,
+                    2,
+                    2
+                ],
+                [
+                    2,
+                    0,
+                    0
+                ]
+            ],
+            "output": [
+                [
+                    0,
+                    2,
+                    2
+                ],
+                [
+                    0,
+                    2,
+                    2
+                ],
+                [
+                    1,
+                    0,
+                    0
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    2,
+                    2,
+                    2,
+                    0
+                ],
+                [
+                    0,
+                    2,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    2
+                ],
+                [
+                    0,
+                    2,
+                    0,
+                    0
+                ]
+            ],
+            "output": [
+                [
+                    2,
+                    2,
+                    2,
+                    0
+                ],
+                [
+                    0,
+                    2,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                [
+                    0,
+                    1,
+                    0,
+                    0
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    2,
+                    2,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    2,
+                    0,
+                    0
+                ],
+                [
+                    2,
+                    2,
+                    0,
+                    2
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    2,
+                    2,
+                    2
+                ]
+            ],
+            "output": [
+                [
+                    2,
+                    2,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    2,
+                    0,
+                    0
+                ],
+                [
+                    2,
+                    2,
+                    0,
+                    1
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    2,
+                    2,
+                    2
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    2,
+                    2,
+                    0
+                ],
+                [
+                    2,
+                    0,
+                    2
+                ],
+                [
+                    0,
+                    2,
+                    0
+                ]
+            ],
+            "output": [
+                [
+                    2,
+                    2,
+                    0
+                ],
+                [
+                    2,
+                    0,
+                    1
+                ],
+                [
+                    0,
+                    1,
+                    0
+                ]
+            ]
+        }
+    ],
+    "test": [
+        {
+            "input": [
+                [
+                    2,
+                    2,
+                    0,
+                    2
+                ],
+                [
+                    0,
+                    2,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    2,
+                    0
+                ],
+                [
+                    2,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    2,
+                    2
+                ]
+            ],
+            "output": [
+                [
+                    2,
+                    2,
+                    0,
+                    1
+                ],
+                [
+                    0,
+                    2,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    1,
+                    0
+                ],
+                [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    2,
+                    2
+                ]
+            ]
+        }
+    ],
+    "descriptions": [
+        {
+            "see_description": "In the input, you should see... a number of different size shapes.",
+            "grid_description": "The output grid size... is the same as the input grid.",
+            "do_description": "To make the output, you have to... copy the input grid. Any shapes which only contain one single square should be colored blue.",
+            "confidence": 8
+        },
+        {
+            "see_description": "In the input, you should see...one shape and two other squares.",
+            "grid_description": "The output grid size...is the same as input size.",
+            "do_description": "To make the output, you have to...color in the colored squares with blue that stand by themselves or have no side connect with other squares.",
+            "confidence": 8
+        },
+        {
+            "see_description": "In the input, you should see...shapes made of single squares and shapes made of several squares.",
+            "grid_description": "The output grid size... remains the same.",
+            "do_description": "To make the output, you have to...color shapes made of a single square blue.",
+            "confidence": 8
+        }
+    ]
+}

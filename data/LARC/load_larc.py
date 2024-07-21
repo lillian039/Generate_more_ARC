@@ -52,9 +52,47 @@ def random_eight_examples():
         with open(f'larc_subset_eight/{name}.txt', 'w') as f:
             f.write(str_task_train)
 
-random_eight_examples()
-            
+def extract_confident_examples():
+    path = 'tasks_json/'
+    files = os.listdir(path)
+    files = sorted(files)
+    os.makedirs('larc_confident', exist_ok=True)
+    data_list = []
 
+    for i in range(len(files)):
+        cur_task_name = files[i]
+        with open(path + cur_task_name, 'r') as f:
+            task = json.load(f)
+        new_data = {}
+        new_data['name'] = task['name']
+        new_data['train'] = task['train']
+        new_data['test'] = task['test']
+        new_data['descriptions'] = []
+     
+
+        for key in task['descriptions'].keys():
+            task_item = task['descriptions'][key]
+            if not task_item['succeeded_verification']:
+                continue
+            if task_item['confidence'] < 8:
+                continue
+            see_object = task_item['see_description']
+            grid_size = task_item['grid_description']
+            discription = task_item['do_description']
+            confidence = task_item['confidence']
+            description_cur = {}
+            description_cur['see_description'] = see_object
+            description_cur['grid_description'] = grid_size
+            description_cur['do_description'] = discription
+            description_cur['confidence'] = confidence
+            new_data['descriptions'].append(description_cur)
+            data_list.append(new_data)
+        if len(new_data['descriptions']) > 0:
+            with open(f'larc_confident/{cur_task_name}', 'w') as f:
+                json.dump(new_data, f, indent=4)
+
+            
+extract_confident_examples()
 # print(tasks.keys()) 
 #   ['descriptions', 'name', 'test', 'train']
 # print(tasks['descriptions'].keys())

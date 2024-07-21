@@ -14,7 +14,7 @@ def main():
     llm = get_llm(args)
     logger = get_logger('input_hypo', args)
     # 123 42
-    random.seed(42)
+    random.seed(1)
     data = load_arc_subset()
     transformation_library = get_transformation_library()
     json_record = []
@@ -31,7 +31,9 @@ def main():
         
         # original_hypo = task['human_description']
         # prompt_for_hypotheses = get_prompt_for_hypotheses1(transformed_list, original_hypo)
-        prompt_for_hypotheses = get_prompt_for_hypotheses2(transformed_list, transformation_hint)
+        prompt_for_hypotheses = get_prompt_for_hypotheses2("", transformation_hint)
+        # print(prompt_for_hypotheses)
+        # exit(0)
         prompt = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": prompt_for_hypotheses}
@@ -53,7 +55,7 @@ def main():
             json_record.append({'task': task['name'], 'num': i, 'hypothesis': code, 'results': outputs})
         logger.info(response)
 
-    with open('result/hypotheses42.json','w') as f:
+    with open('result/hypotheses_seed1','w') as f:
         json.dump(json_record, f, indent=4)
         # exit()
 

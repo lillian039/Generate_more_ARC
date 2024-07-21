@@ -1,0 +1,225 @@
+{
+    "name": "8be77c9e.json",
+    "train": [
+        {
+            "input": [
+                [
+                    1,
+                    1,
+                    0
+                ],
+                [
+                    1,
+                    1,
+                    1
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "output": [
+                [
+                    1,
+                    1,
+                    0
+                ],
+                [
+                    1,
+                    1,
+                    1
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    1,
+                    1,
+                    1
+                ],
+                [
+                    1,
+                    1,
+                    0
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    1,
+                    0,
+                    1
+                ],
+                [
+                    1,
+                    1,
+                    0
+                ]
+            ],
+            "output": [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    1,
+                    0,
+                    1
+                ],
+                [
+                    1,
+                    1,
+                    0
+                ],
+                [
+                    1,
+                    1,
+                    0
+                ],
+                [
+                    1,
+                    0,
+                    1
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ]
+            ]
+        },
+        {
+            "input": [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    1
+                ],
+                [
+                    0,
+                    0,
+                    1
+                ]
+            ],
+            "output": [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    1
+                ],
+                [
+                    0,
+                    0,
+                    1
+                ],
+                [
+                    0,
+                    0,
+                    1
+                ],
+                [
+                    0,
+                    0,
+                    1
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ]
+            ]
+        }
+    ],
+    "test": [
+        {
+            "input": [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    1
+                ],
+                [
+                    1,
+                    0,
+                    0
+                ]
+            ],
+            "output": [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    1
+                ],
+                [
+                    1,
+                    0,
+                    0
+                ],
+                [
+                    1,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    1
+                ],
+                [
+                    0,
+                    0,
+                    0
+                ]
+            ]
+        }
+    ],
+    "descriptions": [
+        {
+            "see_description": "In the input, you should see...a 3x3 grid. some of the squares are filled with blue, and the rest are filled with black.",
+            "grid_description": "The output grid size...the height would be double the input and the width would remain the same. It will be a 3x6 grid.",
+            "do_description": "To make the output, you have to...fill the top of the grid with the same as original. And fill the bottom of the grid with a mirror image of the original.",
+            "confidence": 9
+        },
+        {
+            "see_description": "In the input, you should see...3x3 grid with some squares filled with the same color and the rest filled with black",
+            "grid_description": "The output grid size...double the height of the input grid and the same width as the input grid",
+            "do_description": "To make the output, you have to...mirror the grid on the new grid",
+            "confidence": 10
+        }
+    ]
+}
