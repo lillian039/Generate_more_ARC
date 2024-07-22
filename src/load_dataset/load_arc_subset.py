@@ -56,6 +56,8 @@ def transform_format_to_list(matrix):
 
 def generate_output_by_code(input_list, code):
     original_code = code
+    if original_code.strip() == "":
+        exit(0)
     outputs = []
     for input_example in input_list:
         # print(input_example)
@@ -79,14 +81,49 @@ def generate_output_by_code(input_list, code):
             sys.stdout = sys.__stdout__
             os.remove(f'result/{code_id}_output.txt')
             output = f"Runtime Error: {e}"
+            print(code)
             print(output)
     return outputs
+
+def generate_input_num(input_number, code):
+    original_code = code
+    intputs = []
+    for i in range(input_number):
+        if "import random" in code:
+            code = original_code + f"\nrandom.seed({i})\n"
+        if "import numpy as np" in code:
+            code = original_code + f"\nnp.random.seed({i})\n"
+
+        code_id = hashlib.md5(str(code).encode('utf-8')).hexdigest()
+        code += "print(generate_input())\n"
+        try:
+            with open(f'result/{code_id}_output.txt', 'w') as file:
+                sys.stdout = file
+                global timeout
+                signal.alarm(timeout)
+                exec(code, globals())
+                sys.stdout = sys.__stdout__
+                signal.alarm(0)
+            with open(f'result/{code_id}_output.txt', 'r') as file:
+                output = file.read()[:-1]
+            os.remove(f'result/{code_id}_output.txt')
+            output_list_format, succeed = transform_format_to_list(output)
+            intputs.append(output_list_format)
+        except Exception as e:
+            sys.stdout = sys.__stdout__
+            os.remove(f'result/{code_id}_output.txt')
+            output = f"Runtime Error: {e}"
+            print(output)
+    return intputs
         
         
 def task_filter(data):
     flag = False
+    input_all_black = True
+    output_all_black = True
     for i, output in enumerate(data):
         if output['output'] == output['input'] or len(output['output']) == 0 or len(output['input']) == 0:
+            print("Same / Empty")
             return False
         for list in output['output']:
             for number in list:
@@ -94,8 +131,32 @@ def task_filter(data):
                     return False
         if i != 0 and output['output'] != data[i-1]['output']:
             flag = True
+        for column in output['intput']:
+            for number in column:
+                if number != 0:
+                    input_all_black = False
+                    break
+        for column in output['output']:
+            for number in column:
+                if number != 0:
+                    output_all_black = False
+                    break
+    if input_all_black or output_all_black:
+        return False
     return flag
+
+def load_library(batch_size):
+    with open(f'result/cur_library/{batch_size}.json') as f:
+        data = json.load(f)
+    return data
     
-    
+def remove_print(code_str):
+    code_str = code_str.replace('print(', '# print(')
+    last_return_index = code_str.rfind("return")
+    next_newline_index = code_str.find("\n", last_return_index + len("return"))
+    if next_newline_index == -1:
+        return code_str
+    code_str = code_str[: next_newline_index + 1] + '\n'
+    return code_str
     
     

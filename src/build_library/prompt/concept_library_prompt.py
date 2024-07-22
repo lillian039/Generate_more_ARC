@@ -263,7 +263,8 @@ Description 3
 In the input, you should see: green pixels in a random pattern.
 The output grid size: is the same as the input grid size.
 To make the output, you have to: .copy the input grid and then fill in each area or pixel enclosed by green pixels with yellow.
-
+"""
+        answer_1 = """
 Definition about the objects:
 1. Enclosed area: a region of the grid that is surrounded by a specific color or pattern.
 
@@ -296,7 +297,8 @@ Description 1
 In the input, you should see: a gray grid with 9 different smaller squares with various color block patterns.
 The output grid size: remains the same.
 To make the output, you have to: find the square that has only four color blocks in the pattern. Use that design to fill the blocks in the output design. The gray areas stay the same.
-
+"""
+        answer_2 = """
 Definition about the objects:
 1. Enclosed area: a region of the grid that is surrounded by a specific color or pattern.
 2. Suqares that are seperated by grid.
@@ -343,7 +345,8 @@ In the input, you should see: A grid with colored pixels.
 The output grid size: Is twice as large as the input, so a 2x2 becomes 4x4 and a 3x3 becomes 6x6 and so on.
 To make the output, you have to: Create a grid twice the size of the input. Divide the output grid into 4 quadrants. Replicate the input grid pixels in the upper right quad. In the upper left quad, place the input grid that's been rotated clockwise 90 degrees. In the lower right quad, place the input grid colored pixels that has been rotated 180 degrees. In the lower left quad place a copy of the input grid that's been rotated 90 degrees COUNTER-CLOCKWISE. Done.
 ```
-
+"""
+        answer_3 = """
 Definition about the objects:
 1. Enclosed area: a region of the grid that is surrounded by a specific color or pattern.
 2. Suqares that are seperated by grid.
@@ -361,8 +364,8 @@ Crucial concepts about the transformation:
 5. Rotate the grid in different directions.
 """
         if number == 1:
-                return example_1
+                return example_1, answer_1
         if number == 2:
-                return example_2
-        if number == 3:
-                return example_3
+                return example_2, answer_2
+        if number >= 3:
+                return example_3, answer_3

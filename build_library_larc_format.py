@@ -3,6 +3,7 @@ import json
 from src.utils.llm.main import get_llm, add_llm_args
 from src.utils.logger import get_logger
 import argparse
+from src.build_library.prompt.concept_library_prompt import get_library_example_prompt
 from datetime import datetime
 import re
 def seperate_batch(files, batch_size):
@@ -34,13 +35,16 @@ def load_confident_larc(llm, logger, batch_size=1):
             with open(cur_path, 'r') as f:
                 task = json.load(f)
             if len(files) > 1:
-                str_task_description += 'Task ' + str(cnt + 1) + '\n'
+                str_task_description += 'Task ' + str(cnt + 1) + '\n' + '```\n'
             task_description = task['descriptions']
+            example1, answer1 = get_library_example_prompt(batch_size)
             for i, description in enumerate(task_description):
                 str_task_description += 'Description ' + str(i + 1) + '\n'
                 str_task_description += description['see_description'] + '\n' + description['grid_description'] + '\n' + description['do_description'] + '\n\n'
                 str_task_description = str_task_description.replace('...', ': ').replace('  ',' ')
-        str_task_description += """Please extract the crucial concept from the above descriptions in the following format:\n\n
+            str_task_description += '```\n\n'
+        system = """You are an expert player in visual puzzle games. You are asked to extract crucial concept from given hypothese.
+Please extract the crucial concept from the above descriptions in the following format:\n\n
 Definition about the objects:\n
 1. [definition 1]\n
 ...
@@ -50,14 +54,20 @@ Crucial concepts about the transformation:\n
 1. [concept 1]\n
 ...
 Make concepts as refined as possible, no more than one sentence. Each concept should be unique to each other.
-"""     
-        system = "You are an expert player in visual puzzle games. You are asked to extract crucial concept from given hypothese."
-        content = str_task_description
-        logger.info(content)
+"""             
+        
+        # logger.info(str_task_description)
         prompt = [
                 {"role": "system", "content": system},
-                {"role": "user", "content": content}
+                {"role": "user", "content": example1},
+                {"role": "assistant", "content": answer1},
+                {"role": "user", "content": str_task_description}
         ]
+        # logger.info(system)
+        # logger.info(example1)
+        # logger.info(answer1)
+        # logger.info(str_task_description)
+        # exit()
         for i in range(3):
             response = llm(prompt).choices[0].message.content
             # print(response)
@@ -85,7 +95,7 @@ Make concepts as refined as possible, no more than one sentence. Each concept sh
                 logger.info(response)
                 break
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    with open(f'result/library/{batch_size}_{current_time}.json','w') as f:
+    with open(f'result/library/{batch_size}_format_{current_time}.json','w') as f:
         json.dump({'object_library':object_library, 'grid_library':grid_library, 'transformation_library':transformation_library}, f, indent=4)
     
 def main():
