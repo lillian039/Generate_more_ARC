@@ -1,54 +1,26 @@
-import numpy as np
-import random
+from src.utils.get_k_sim import KSIM
+import json
 
-def generate_input() -> np.ndarray:
-    # Define grid size randomly (minimum 3x3 to allow 3x3 blocks)
-    rows = random.randint(3, 30)
-    cols = random.randint(3, 30)
-    
-    # Create an empty grid full of black (0)
-    grid = np.zeros((rows, cols), dtype=int)
-    
-    # Add several blue (1) 3x3 squares, ensuring they fit within the grid boundaries
-    for _ in range(random.randint(1, 10)):  # Random number of blocks
-        r = random.randint(0, rows-3)
-        c = random.randint(0, cols-3)
-        grid[r:r+3, c:c+3] = 1  # Create a 3x3 block of blue
+with open(f'result/library/1_concept_pair_2024-07-24_00-13-19.json', 'r') as f:
+    data = json.load(f)
 
-    # Potentially add some existing orange (7) borders randomly
-    for _ in range(random.randint(0, 5)):
-        r = random.randint(0, rows-3)
-        c = random.randint(0, cols-3)
-        grid[r:r+3, c:c+3] = 7
-        grid[r+1, c+1] = 1  # Make sure the central element is blue
-        
-    return grid
+# print(data)
+data = data['concept_pair_list']
 
-def transform_grid(input_grid: np.ndarray) -> np.ndarray:
-    rows, cols = input_grid.shape
-    output_grid = np.copy(input_grid)
-    
-    # Check each possible 3x3 area
-    for r in range(rows - 2):
-        for c in range(cols - 2):
-            # Check if the center of the current 3x3 block is blue
-            if input_grid[r+1, c+1] == 1:
-                # Surround with orange but leave the 3x3 block untouched in the middle
-                if r > 0:
-                    output_grid[r, c:c+3] = 7
-                if r < rows-3:
-                    output_grid[r+3, c:c+3] = 7
-                if c > 0:
-                    output_grid[r+1, c] = 7
-                    output_grid[r+2, c] = 7
-                if c < cols-3:
-                    output_grid[r+1, c+3] = 7
-                    output_grid[r+2, c+3] = 7
+object_concept = []
+transformation_concept = []
+for item in data:
+    object_concept.append(item['object'][0])
+    transformation_concept.append(item['transformation'])
 
-    return output_grid
+ksim = KSIM(object_concept)
 
-input_grid = generate_input()
-output_grid = transform_grid(input_grid)  
-print(input_grid)
-print("************")
-print(output_grid)
+cur_index = 1
+# index = ksim.get_k_sim(object_concept[cur_index], 5)
+index = ksim.get_lager_sim(object_concept[cur_index], 0.25)
+print(object_concept[cur_index])
+print(index)
+transformation = ksim.get_content_from_index(index, transformation_concept)
+objects = ksim.get_object_from_index(index)
+print(objects)
+print(transformation)

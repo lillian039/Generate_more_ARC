@@ -27,6 +27,7 @@ def load_confident_larc(llm, logger, batch_size=1):
     object_library = []
     grid_library = []
     transformation_library = []
+    concept_pair_list = []
     for files in batchs:
         print(files)
         str_task_description = "The following descriptions below each task describe the same task's transformation by different people.\n\n"
@@ -55,6 +56,7 @@ Crucial concepts about the transformation:\n
 ...
 Make concepts as refined as possible, no more than one sentence. Each concept should be unique to each other.
 """             
+        concept_pair = {}
         
         # logger.info(str_task_description)
         prompt = [
@@ -92,16 +94,24 @@ Make concepts as refined as possible, no more than one sentence. Each concept sh
                 object_library += object_definitions
                 grid_library += grid_sizes
                 transformation_library += concepts
+
+                concept_pair['object'] = object_definitions
+                concept_pair['grid'] = grid_sizes
+                concept_pair['transformation'] = concepts
+
+                concept_pair_list.append(concept_pair)
                 logger.info(response)
                 break
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     with open(f'result/library/{batch_size}_format_{current_time}.json','w') as f:
         json.dump({'object_library':object_library, 'grid_library':grid_library, 'transformation_library':transformation_library}, f, indent=4)
+    with open(f'result/library/{batch_size}_concept_pair_{current_time}.json','w') as f:
+        json.dump({'concept_pair_list':concept_pair_list}, f, indent=4)
     
 def main():
     parser = argparse.ArgumentParser()
     add_llm_args(parser)
-    parser.add_argument('--batch_size', type=int, default=4)
+    parser.add_argument('--batch_size', type=int, default=1)
     args = parser.parse_args()
     llm = get_llm(args)
     logger = get_logger(f'extract_concept_{args.batch_size}', args)

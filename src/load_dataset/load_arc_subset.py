@@ -81,8 +81,8 @@ def generate_output_by_code(input_list, code):
             sys.stdout = sys.__stdout__
             os.remove(f'result/{code_id}_output.txt')
             output = f"Runtime Error: {e}"
-            print(code)
-            print(output)
+            # print(code)
+            # print(output)
     return outputs
 
 def generate_input_num(input_number, code):
@@ -131,7 +131,7 @@ def task_filter(data):
                     return False
         if i != 0 and output['output'] != data[i-1]['output']:
             flag = True
-        for column in output['intput']:
+        for column in output['input']:
             for number in column:
                 if number != 0:
                     input_all_black = False
@@ -159,4 +159,14 @@ def remove_print(code_str):
     code_str = code_str[: next_newline_index + 1] + '\n'
     return code_str
     
+def get_transformation_rule(content):
+    rule_index = content.find('Transformation rule:')
+    rule_length = content[rule_index + len('Transformation rule:'):].find('\n') + 1
+    transformation_rule = content[rule_index + len('Transformation rule:'): rule_index + len('Transformation rule:') + rule_length]
+    object_index = content.find('Object description:')
+    object_length = content[object_index + len('Object description:'):].find('\n') + 1
+    object_description = content[object_index + len('Object description:'): object_index + len('Object description:') + object_length]
+    transformation_rule = transformation_rule.strip()
+    object_description = object_description.strip()
+    return transformation_rule, object_description
     
