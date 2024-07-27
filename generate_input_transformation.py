@@ -6,6 +6,7 @@ from src.build_library.prompt.generate_tasks_prompt import generate_system, cont
 from src.build_library.prompt.transform_concept_library import get_transformation_library
 from src.load_dataset.vis_data_per_task import visualize_data
 from src.utils.sample_dpp import get_dpp
+from src.utils.html_vis import get_html_vis
 import random
 import json
 def main():
@@ -20,22 +21,24 @@ def main():
     
     rng = random.Random(42)
     # random.seed(42)
-    concept_library = load_library(1)
+    concept_library = load_library("self_instruct_4t_pair")
     transform_library = concept_library['transformation_library']
     object_library = concept_library['object_library']
     grid_library = concept_library['grid_library']
+    html_description = []
     cnt = 0
 
     # cur_description = get_dpp(transform_library, 42, 65)
     round_num = 0
     while(cnt < 40):
-        transformation_hint  = rng.sample(transform_library, 2)
-        object_hint = rng.sample(object_library, 1)
-        grid_hint = rng.sample(grid_library, 1)
+        transformation_hint  = rng.sample(transform_library, 1)
+        # object_hint = rng.sample(object_library, 1)
+        # grid_hint = rng.sample(grid_library, 1)
         transformation_hint_str = ""
         for hints in transformation_hint:
             transformation_hint_str += hints + '\n'
         # transformation_hint = cur_description[round_num]
+        # Object description: {object_hint}
         round_num += 1
         hint = f"""
 Transformation rule: {transformation_hint}
@@ -66,10 +69,24 @@ Transformation rule: {transformation_hint}
                 print(extract_python_code(response)[0])
                 exit()
             inputs = generate_input_num(5, code)
+            if double_check:
+                inputs2 = generate_input_num(5, code)
+                if inputs2 != inputs:
+                    print("Input double check failed")
+                    # print(inputs)
+                    # print(inputs2)
+                    print(code)
+                    exit()
+                    continue
             logger.info(code)
             # print(inputs)
             # exit(0)
             outputs = generate_output_by_code(inputs, code)
+            if double_check:
+                outputs2 = generate_output_by_code(inputs, code)
+                if outputs2 != outputs:
+                    print("Output double check failed")
+                    continue
 
             # print(outputs)
             if not task_filter(outputs):
@@ -78,6 +95,7 @@ Transformation rule: {transformation_hint}
                 visualize_data(outputs, cnt, 1)
                 cnt += 1
                 json_record.append({'task': cnt, 'transformation_rule': transformation_rule, 'hint': hint, "object_description": object_description,'generator': code, 'results': outputs})
+                html_description.append(f"Transformation rule:\n{transformation_rule}\n\nObject description:\n{object_description}\n\nhint:\n{hint}\n")
                 break
             except Exception as e:
                 print(e)
@@ -91,8 +109,11 @@ Transformation rule: {transformation_hint}
     completion_price = 0.03 * usage['completion_tokens'] * 1e-3
     print(f"Prompt price: {prompt_price:.2f}Completion price: {completion_price:.2f} Total price: {(prompt_price + completion_price):.2f}")
     logger.info(f"Prompt price: {prompt_price:.2f}Completion price: {completion_price:.2f} Total price: {(prompt_price + completion_price):.2f}")
-    with open('result/hypotheses_gen_size_1_refine_2.json','w') as f:
+    with open('result/test_pair.json','w') as f:
         json.dump(json_record, f, indent=4)
+    with open('result/vis/cat_img/vis.html', 'w') as f:
+        html_content = get_html_vis(html_description, cnt)
+        f.write(html_content)
         # print(response)
         
 main()

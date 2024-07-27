@@ -9,7 +9,7 @@ import time
 from ..caching import _CacheSystem
 
 def add_llm_args(parser):
-    # gpt-35 gpt4t
+    # gpt35 gpt4t
     parser.add_argument('--llm-model', type=str, default='gpt4t', help="The model to use for LLM")
     parser.add_argument('--llm-temperature', type=float, default=1.0, help="The temperature to use for LLM")
     parser.add_argument('--llm-seed', type=int, default=None, help="The seed to use for LLM")

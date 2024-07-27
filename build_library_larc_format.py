@@ -6,7 +6,16 @@ import argparse
 from src.build_library.prompt.concept_library_prompt import get_library_example_prompt
 from datetime import datetime
 import re
-def seperate_batch(files, batch_size):
+def seperate_batch(files, batch_size, if_remove_subset):
+    if if_remove_subset:
+        new_files = []
+        for file in files:
+            path = 'data/LARC/larc_confident/' + file
+            with open(path, 'r') as f:
+                task = json.load(f)
+            if not judge_if_remove_subset(task['name']):
+                new_files.append(file)
+        files = new_files
     batchs = []
     for i in range(0, len(files), batch_size):
         batchs.append(files[i:i+batch_size])
@@ -18,23 +27,32 @@ def split_sentences(text):
     sentences = [sentence for sentence in sentences if sentence != '**']
     return sentences
 
+def judge_if_remove_subset(task_name):
+    with open('data/arc_subset.json', 'r') as f:
+        data = json.load(f)
+    for task in data:
+        if task['name'] == task_name:
+            return True
+    return False
 
-def load_confident_larc(llm, logger, batch_size=1):
+
+def load_confident_larc(llm, logger, batch_size=1, if_remove_subset=False):
     path = 'data/LARC/larc_confident/'
     files = os.listdir(path)
     files = sorted(files)
-    batchs = seperate_batch(files, batch_size)
+    batchs = seperate_batch(files, batch_size, if_remove_subset)
     object_library = []
     grid_library = []
     transformation_library = []
     concept_pair_list = []
     for files in batchs:
-        print(files)
+        # print(files)
         str_task_description = "The following descriptions below each task describe the same task's transformation by different people.\n\n"
         for cnt, file in enumerate(files):
             cur_path = path + file
             with open(cur_path, 'r') as f:
                 task = json.load(f)
+            
             if len(files) > 1:
                 str_task_description += 'Task ' + str(cnt + 1) + '\n' + '```\n'
             task_description = task['descriptions']
@@ -103,18 +121,18 @@ Make concepts as refined as possible, no more than one sentence. Each concept sh
                 logger.info(response)
                 break
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    with open(f'result/library/{batch_size}_format_{current_time}.json','w') as f:
+    with open(f'result/library/{batch_size}_format_remove_{current_time}.json','w') as f:
         json.dump({'object_library':object_library, 'grid_library':grid_library, 'transformation_library':transformation_library}, f, indent=4)
-    with open(f'result/library/{batch_size}_concept_pair_{current_time}.json','w') as f:
+    with open(f'result/library/{batch_size}_concept_pair_remove_{current_time}.json','w') as f:
         json.dump({'concept_pair_list':concept_pair_list}, f, indent=4)
     
 def main():
     parser = argparse.ArgumentParser()
     add_llm_args(parser)
-    parser.add_argument('--batch_size', type=int, default=1)
+    parser.add_argument('--batch_size', type=int, default=4)
     args = parser.parse_args()
     llm = get_llm(args)
     logger = get_logger(f'extract_concept_{args.batch_size}', args)
-    load_confident_larc(llm, logger, args.batch_size)
+    load_confident_larc(llm, logger, args.batch_size, True)
 
 main()

@@ -39,7 +39,7 @@ class KSIM:
         self.similarity_matrix = cosine_similarity(tfidf_matrix, tfidf_matrix)
 
     def _get_top_k_similar(self, similarity_matrix, k):
-            print(sorted(similarity_matrix[k])[-k-1:-1])
+            # print(sorted(similarity_matrix[k])[-k-1:-1])
             top_k_indices = np.argsort(similarity_matrix, axis=1)[:, -k-1:-1][:, ::-1]
             return top_k_indices
 
@@ -58,7 +58,7 @@ class KSIM:
         cur_task_index = self.descriptions.index(str_task_description)
         return top_sim[cur_task_index]
 
-    def get_lager_sim(self, str_task_description, min_value):
+    def get_larger_sim(self, str_task_description, min_value):
         if str_task_description not in self.descriptions:
              print(str_task_description)
              return None

@@ -89,11 +89,16 @@ def generate_input_num(input_number, code):
     original_code = code
     intputs = []
     for i in range(input_number):
+        code = original_code
+        if "from random import" in code:
+            code = "import random\n" + code
         if "import random" in code:
-            code = original_code + f"\nrandom.seed({i})\n"
+            code += f"\nrandom.seed({i})\n"
         if "import numpy as np" in code:
-            code = original_code + f"\nnp.random.seed({i})\n"
-
+            code += f"\nnp.random.seed({i})\n"
+        if "rng = default_rng()" in code:
+            code = code.replace("rng = default_rng()", f"rng = default_rng({i})")
+        # print(code)
         code_id = hashlib.md5(str(code).encode('utf-8')).hexdigest()
         code += "print(generate_input())\n"
         try:
@@ -152,6 +157,7 @@ def load_library(batch_size):
     
 def remove_print(code_str):
     code_str = code_str.replace('print(', '# print(')
+    code_str = code_str.replace('np.random.seed()', '# np.random.seed()')
     last_return_index = code_str.rfind("return")
     next_newline_index = code_str.find("\n", last_return_index + len("return"))
     if next_newline_index == -1:
@@ -168,5 +174,6 @@ def get_transformation_rule(content):
     object_description = content[object_index + len('Object description:'): object_index + len('Object description:') + object_length]
     transformation_rule = transformation_rule.strip()
     object_description = object_description.strip()
+
     return transformation_rule, object_description
     
