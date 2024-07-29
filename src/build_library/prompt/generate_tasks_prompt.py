@@ -192,4 +192,5 @@ def transform_grid(input_grid: np.ndarray[int]) -> np.ndarray[int]:
 The function generate_input() should be stochastic, which means every time you call it, it should generate a different input grid. It must contain meaningful pattern objects according to the hint concept rather than random numbers. Otherwise the task will be rejected.
 The function transform_grid() should be deterministic, which means given the same input grid, it should always generate the same output grid.
 The genertaed input should only contains the colors that are defined in the color-number relationship. Every grid's size should be ranging from 1x1 to 30x30.
+The number only represents the color of the object, the transformation rule MUST NOT use the number to do calculation, and not do any calculation on the number (such as add one to each color).
 """

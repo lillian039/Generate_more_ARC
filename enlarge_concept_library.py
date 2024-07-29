@@ -1,5 +1,5 @@
 import json
-from src.build_library.prompt.self_instruct import system, get_content, get_content_pair
+from src.build_library.prompt.self_instruct import system, get_content, get_content_pair, system_similar, get_content_similar
 import random
 from src.utils.llm.main import get_llm, add_llm_args
 import argparse
@@ -63,7 +63,7 @@ def self_instruct(llm, example_k, example_new, generate_k, logger):
     original_data = original_data['transformation_library']
     cur_data = []
     ksim = KSIM(original_data)
-    while(len(cur_data) < 2000):
+    while(len(cur_data) < 400):
         if len(cur_data) < 100:
             # print("?")
             data = random.sample(original_data, 1)
@@ -75,13 +75,13 @@ def self_instruct(llm, example_k, example_new, generate_k, logger):
             data += random.sample(cur_data, example_new)
         # print(get_content(data, generate_k))
         prompt = [
-            {"role": "system", "content": system},
-            {"role": "user", "content": get_content(data, generate_k)}
+            {"role": "system", "content": system_similar},
+            {"role": "user", "content": get_content_similar(data, generate_k)}
         ]
 
         response = llm(prompt).choices[0].message.content
-        # logger.info(f"Example:\n{get_content(data, generate_k)}")
-        # logger.info(f"Response:\n{response}")
+        logger.info(f"Example:\n{get_content_similar(data, generate_k)}")
+        logger.info(f"Response:\n{response}")
         # print(response)
         cur_result = seperate_result(response, example_k, example_k + generate_k)
         for cur_inst in cur_result:
@@ -115,9 +115,11 @@ def main():
     args = parser.parse_args()
     logger = get_logger('self_instruct', args)
     llm = get_llm(args)
-    new_generate = self_instruct_pair(llm, 30, 10, 10, logger)
-    with open('result/enlarged_library/self_instruct_4t_pair.json', 'w') as f:
+    new_generate = self_instruct(llm, 4, 0, 4, logger)
+    with open('result/enlarged_library/self_instruct_4t_similar.json', 'w') as f:
         new_generate = {'transformation_library': new_generate, 'object_library': [], 'grid_library': []}
         json.dump(new_generate, f, indent=4)
-
+    with open('result/enlarged_library/merge.json', 'w') as f:
+        new_generate = {'transformation_library': new_generate['transformation_library'] + load_previous_library()['transformation_library'], 'object_library': [], 'grid_library': []}
+        json.dump(new_generate, f, indent=4)
 main()

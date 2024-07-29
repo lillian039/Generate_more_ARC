@@ -9,7 +9,7 @@ from src.utils.sample_dpp import get_dpp
 from src.utils.html_vis import get_html_vis
 import random
 import json
-def main():
+def main(generator_number = 1):
     double_check = True
     parser = argparse.ArgumentParser()
     add_llm_args(parser)
@@ -21,23 +21,28 @@ def main():
     
     rng = random.Random(42)
     # random.seed(42)
-    concept_library = load_library("self_instruct_4t_pair")
+    concept_library = load_library("merge")
     transform_library = concept_library['transformation_library']
     object_library = concept_library['object_library']
     grid_library = concept_library['grid_library']
     html_description = []
     cnt = 0
 
-    # cur_description = get_dpp(transform_library, 42, 65)
+    cur_description = get_dpp(transform_library, 42, 150)
+    # cur_description2 = get_dpp(transform_library, 123, 150)
     round_num = 0
-    while(cnt < 40):
-        transformation_hint  = rng.sample(transform_library, 1)
+    while(cnt < 100):
+        # transformation_hint  = rng.sample(transform_library, 1)
         # object_hint = rng.sample(object_library, 1)
         # grid_hint = rng.sample(grid_library, 1)
-        transformation_hint_str = ""
-        for hints in transformation_hint:
-            transformation_hint_str += hints + '\n'
-        # transformation_hint = cur_description[round_num]
+        # transformation_hint_str = ""
+        # for hints in transformation_hint:
+        #     transformation_hint_str += hints + '\n'
+        # transformation_hint = "1. " + cur_description[round_num] + '\n' + "2. " + cur_description2[round_num]
+        transformation_hint = cur_description[round_num]
+
+        # print(transformation_hint)
+        # exit(0)
         # Object description: {object_hint}
         round_num += 1
         hint = f"""
@@ -76,7 +81,7 @@ Transformation rule: {transformation_hint}
                     # print(inputs)
                     # print(inputs2)
                     print(code)
-                    exit()
+                    # exit()
                     continue
             logger.info(code)
             # print(inputs)
@@ -92,7 +97,7 @@ Transformation rule: {transformation_hint}
             if not task_filter(outputs):
                 continue
             try:
-                visualize_data(outputs, cnt, 1)
+                visualize_data(outputs, cnt, generator_number)
                 cnt += 1
                 json_record.append({'task': cnt, 'transformation_rule': transformation_rule, 'hint': hint, "object_description": object_description,'generator': code, 'results': outputs})
                 html_description.append(f"Transformation rule:\n{transformation_rule}\n\nObject description:\n{object_description}\n\nhint:\n{hint}\n")
@@ -104,16 +109,17 @@ Transformation rule: {transformation_hint}
         logger.info(response)
     usage = llm.tracker.usage
     print(usage)
-    print("Total requests ",usage['requests'], " Generate requests ", cnt)
+    print("Total requests ",usage['requests'], " Generate requests ", cnt, "Concept num", round_num)
     prompt_price = 0.01 * usage['prompt_tokens'] * 1e-3
     completion_price = 0.03 * usage['completion_tokens'] * 1e-3
     print(f"Prompt price: {prompt_price:.2f}Completion price: {completion_price:.2f} Total price: {(prompt_price + completion_price):.2f}")
     logger.info(f"Prompt price: {prompt_price:.2f}Completion price: {completion_price:.2f} Total price: {(prompt_price + completion_price):.2f}")
-    with open('result/test_pair.json','w') as f:
+    with open(f'result/vis/cat_img/code_{generator_number}.json','w') as f:
         json.dump(json_record, f, indent=4)
-    with open('result/vis/cat_img/vis.html', 'w') as f:
+    with open(f'result/vis/cat_img/vis_{generator_number}.html', 'w') as f:
         html_content = get_html_vis(html_description, cnt)
         f.write(html_content)
         # print(response)
         
-main()
+main(1)
+main(2)

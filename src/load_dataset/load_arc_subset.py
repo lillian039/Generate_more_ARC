@@ -158,6 +158,7 @@ def load_library(batch_size):
 def remove_print(code_str):
     code_str = code_str.replace('print(', '# print(')
     code_str = code_str.replace('np.random.seed()', '# np.random.seed()')
+    code_str = code_str.replace('np.random.seed(', '# np.random.seed(')
     last_return_index = code_str.rfind("return")
     next_newline_index = code_str.find("\n", last_return_index + len("return"))
     if next_newline_index == -1:
