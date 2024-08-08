@@ -165,6 +165,7 @@ You will be given a concept as a hint, and you should come up with executable co
 The number only represents the color of the object, the transformation rule must not use the number to do calculation.
 """
 
+
 def content_prompt(concepts):
     return f"""
 Here are the concepts you need to implement:
@@ -172,6 +173,36 @@ Here are the concepts you need to implement:
 {concepts}
 
 Please generate a transformation rule and the description of the object using this concept. You can also add intersting details to make the task more fun. Please give the transformation rule and object description in the following format:
+```
+Transformation rule: [rule]
+Object description: [description]
+```
+The object description should serve for demonstrate the transformation rule, and must not be meaningless random numbers.
+
+According to the object description and transformation rule, please implement the functions generate_input() -> np.ndarray and transform_grid(input_grid: np.ndarray[int]) -> np.ndarray[int] function.
+The codes should be in the following format:
+```python
+def generate_input() -> np.ndarray:
+    # generate input grid with the transformation concept
+    return input_grid
+
+def transform_grid(input_grid: np.ndarray[int]) -> np.ndarray[int]:
+    # implement the transformation concept
+    return output_grid
+```
+The function generate_input() should be stochastic, which means every time you call it, it should generate a different input grid. It must contain meaningful pattern objects according to the hint concept rather than random numbers. Otherwise the task will be rejected.
+The function transform_grid() should be deterministic, which means given the same input grid, it should always generate the same output grid.
+The genertaed input should only contains the colors that are defined in the color-number relationship. Every grid's size should be ranging from 1x1 to 30x30.
+The number only represents the color of the object, the transformation rule MUST NOT use the number to do calculation, and not do any calculation on the number (such as add one to each color).
+"""
+
+def content_prompt_strict(concepts):
+    return f"""
+Here are the concepts you need to implement:
+
+{concepts}
+
+Please generate a transformation rule and the description of the object using these concepts. But you must follow the given concept strictly. Creat objects with intersting shape, not just stripe or random dot. Please give the transformation rule and object description you derive based on the given concepts in the following format:
 ```
 Transformation rule: [rule]
 Object description: [description]

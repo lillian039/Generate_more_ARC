@@ -81,6 +81,7 @@ def generate_output_by_code(input_list, code):
             sys.stdout = sys.__stdout__
             os.remove(f'result/{code_id}_output.txt')
             output = f"Runtime Error: {e}"
+            return None
             # print(code)
             # print(output)
     return outputs
@@ -119,6 +120,7 @@ def generate_input_num(input_number, code):
             os.remove(f'result/{code_id}_output.txt')
             output = f"Runtime Error: {e}"
             print(output)
+            return None
     return intputs
         
         

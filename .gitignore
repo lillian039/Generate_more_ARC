@@ -4,3 +4,4 @@
 .DS_Store
 src/utils/caching/cached_data/
 img/
+finetune/
